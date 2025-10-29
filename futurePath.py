@@ -53,7 +53,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 # ------------------ UNIVERSITY SELECTION ------------------
 st.markdown("<h1 style='text-align: right;'>اختر الجامعة</h1>", unsafe_allow_html=True)
 
@@ -69,52 +68,54 @@ university = st.selectbox(
 
 st.markdown("<h1 style='text-align: center;'>🌟 Future Path – ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
-
 # ------------------ INPUT FIELDS ------------------
 if university == "جامعة الكويت":
     st.subheader("أدخل درجاتك")
-    gpa = st.number_input(" معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
-    math = st.number_input(" درجة القدرات – رياضيات ٪", 0.0, 100.0, step=0.01, format="%g")
-    english = st.number_input(" درجة القدرات – إنجليزي ٪", 0.0, 100.0, step=0.01, format="%g")
-    arabic = st.number_input(" درجة القدرات – عربي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
-    french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
-
-elif university == "الجامعة الأمريكية في الشرق الأوسط (AUM)":
+    gpa = st.number_input("معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
+    math = st.number_input("درجة القدرات – رياضيات ٪", 0.0, 100.0, step=0.01, format="%g")
+    english = st.number_input("درجة القدرات – إنجليزي ٪", 0.0, 100.0, step=0.01, format="%g")
+    arabic = st.number_input("درجة القدرات – عربي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
+    french = st.number_input("درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
+else:
     st.subheader("أدخل بياناتك")
-    gpa = st.number_input(" معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
-    english = st.number_input(" درجة اختبار اللغة الإنجليزية (IELTS أو TOEFL) ٪", 0.0, 100.0, step=0.01, format="%g")
+    gpa = st.number_input("معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
+    english = st.number_input("درجة اختبار اللغة الإنجليزية ٪", 0.0, 100.0, step=0.01, format="%g")
     math, arabic, french = 0, 0, 0
 
-elif university == "الجامعة الأمريكية في الكويت (AUK)":
-    st.subheader("أدخل بياناتك")
-    gpa = st.number_input(" معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
-    english = st.number_input(" درجة اللغة الإنجليزية ٪", 0.0, 100.0, step=0.01, format="%g")
-    math, arabic, french = 0, 0, 0
-
-elif university == "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)":
-    st.subheader("أدخل بياناتك")
-    gpa = st.number_input(" معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
-    english = st.number_input(" درجة اختبار اللغة الإنجليزية ٪", 0.0, 100.0, step=0.01, format="%g")
-    math, arabic, french = 0, 0, 0
-
-
-
+# ------------------ INTEREST SELECTION ------------------
 st.subheader("اختيار مجال اهتمامك")
+
 university_categories = {
     "جامعة الكويت": [
-        "المجال الطبي والصحي 🏥", "الهندسة والتقنية ⚙️", "التحليل والرياضيات 📊",
-        "القانون والقراءة 📚", "الفنون والتصميم 🎨", "العلوم الطبيعية 🧪", "التربية والتعليم 👩‍🏫"
+        "المجال الطبي والصحي 🏥",
+        "الهندسة والتقنية ⚙️",
+        "التحليل والرياضيات 📊",
+        "القانون والقراءة 📚",
+        "الفنون والتصميم 🎨",
+        "العلوم الطبيعية 🧪",
+        "التربية والتعليم 👩‍🏫"
     ],
     "الجامعة الأمريكية في الشرق الأوسط (AUM)": [
-        "الهندسة والتقنية ⚙️", "الأعمال والإدارة 📊", "العلوم الصحية 🏥", "الفنون والتصميم 🎨"
+        "الهندسة والتقنية ⚙️",
+        "الأعمال والإدارة 📊",
+        "العلوم الصحية 🏥",
+        "الفنون والتصميم 🎨"
     ],
     "الجامعة الأمريكية في الكويت (AUK)": [
-        "الأعمال والإدارة 📊", "العلوم الصحية 🏥", "القانون والقراءة 📚", "الفنون والتصميم 🎨"
+        "الأعمال والإدارة 📊",
+        "العلوم الصحية 🏥",
+        "القانون والقراءة 📚",
+        "الفنون والتصميم 🎨"
     ],
     "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": [
-        "الهندسة والتقنية ⚙️", "الأعمال والإدارة 📊", "العلوم الصحية 🏥", "الفنون والتصميم 🎨"
+        "الهندسة والتقنية ⚙️",
+        "الأعمال والإدارة 📊",
+        "العلوم الصحية 🏥",
+        "الفنون والتصميم 🎨"
     ]
 }
+
+# Dynamically show only categories available for the selected university
 interest_options = university_categories[university]
 interest = st.selectbox("شنو نوع التخصصات اللي تميل لها أكثر؟", interest_options)
 
@@ -124,6 +125,7 @@ if university == "جامعة الكويت":
 else:
     stream = "علمي"
 
+# ------------------ UNIVERSITIES AND COLLEGES DATA ------------------
 # --- جامعة الكويت ---
 kuwait_university_colleges = OrderedDict({
     "كلية الطب": {
@@ -462,32 +464,31 @@ gust_colleges = {
     }
 }
 
-
+universities = {
+    "جامعة الكويت": kuwait_university_colleges,
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": aum_colleges,
+    "الجامعة الأمريكية في الكويت (AUK)": auk_colleges,
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": gust_colleges
+}
 
 # ------------------ RESULTS SECTION ------------------
-if st.button(" اقترح التخصصات"):
+if st.button("اقترح التخصصات"):
     matched = []
     selected_colleges = universities[university]
 
     for name, data in selected_colleges.items():
         if "stream" in data and data["stream"] != stream:
             continue
-
         if interest not in data["interests"]:
             continue
 
-        weights = data["weights"]
+        weights = data.get("weights", {})
         score = 0
-        if "gpa" in weights:
-            score += gpa * (weights["gpa"] / 100)
-        if "math" in weights:
-            score += math * (weights["math"] / 100)
-        if "english" in weights:
-            score += english * (weights["english"] / 100)
-        if "arabic" in weights:
-            score += arabic * (weights["arabic"] / 100)
-        if "french" in weights:
-            score += french * (weights["french"] / 100)
+        score += gpa * (weights.get("gpa", 0) / 100)
+        score += math * (weights.get("math", 0) / 100)
+        score += english * (weights.get("english", 0) / 100)
+        score += arabic * (weights.get("arabic", 0) / 100)
+        score += french * (weights.get("french", 0) / 100)
 
         final_score = round(score, 2)
 
@@ -495,22 +496,16 @@ if st.button(" اقترح التخصصات"):
             matched.append((name, data, final_score))
 
     if matched:
-        st.success(" هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
+        st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-            paths = ", ".join(data["paths"]) if "paths" in data else "غير محدد"
+            paths = ", ".join(data.get("paths", [])) if "paths" in data else "غير محدد"
             st.markdown(f"""
             <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                <p><strong> البرامج المتاحة:</strong> {paths}</p>
+                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
+                <p><strong>البرامج المتاحة:</strong> {paths}</p>
             </div>
             """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
-            📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
-        </div>
-        """, unsafe_allow_html=True)
     else:
         st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك. جرّب مجال آخر أو تحقق من بياناتك.")
