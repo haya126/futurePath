@@ -54,7 +54,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTION ------------------
-st.markdown("<h1 style='text-align: right;'>اختر الجامعة</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: right;'>وجهتي</h1>", unsafe_allow_html=True)
 
 university = st.selectbox(
     "اختر الجامعة:",
