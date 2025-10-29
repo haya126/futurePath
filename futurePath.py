@@ -66,7 +66,7 @@ university = st.selectbox(
     ]
 )
 
-st.markdown("<h1 style='text-align: center;'>🌟 Future Path – ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> بحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
 # ------------------ INPUT FIELDS ------------------
 if university == "جامعة الكويت":
