@@ -472,6 +472,7 @@ universities = {
 }
 
 # ------------------ RESULTS SECTION ------------------
+# ------------------ RESULTS SECTION ------------------
 if st.button("اقترح التخصصات"):
     matched = []
     selected_colleges = universities[university]
@@ -479,16 +480,22 @@ if st.button("اقترح التخصصات"):
     for name, data in selected_colleges.items():
         if "stream" in data and data["stream"] != stream:
             continue
+
         if interest not in data["interests"]:
             continue
 
-        weights = data.get("weights", {})
+        weights = data["weights"]
         score = 0
-        score += gpa * (weights.get("gpa", 0) / 100)
-        score += math * (weights.get("math", 0) / 100)
-        score += english * (weights.get("english", 0) / 100)
-        score += arabic * (weights.get("arabic", 0) / 100)
-        score += french * (weights.get("french", 0) / 100)
+        if "gpa" in weights:
+            score += gpa * (weights["gpa"] / 100)
+        if "math" in weights:
+            score += math * (weights["math"] / 100)
+        if "english" in weights:
+            score += english * (weights["english"] / 100)
+        if "arabic" in weights:
+            score += arabic * (weights["arabic"] / 100)
+        if "french" in weights:
+            score += french * (weights["french"] / 100)
 
         final_score = round(score, 2)
 
@@ -498,25 +505,32 @@ if st.button("اقترح التخصصات"):
     if matched:
         st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-    if "paths" in data:
-        if isinstance(data["paths"], list):
-            if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
-                paths = ", ".join(p["name"] for p in data["paths"])
+            # Correctly handle paths
+            if "paths" in data:
+                if isinstance(data["paths"], list):
+                    if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
+                        paths = ", ".join(p["name"] for p in data["paths"])
+                    else:
+                        paths = ", ".join(data["paths"])
+                else:
+                    paths = str(data["paths"])
             else:
-                paths = ", ".join(data["paths"])
-        else:
-            paths = str(data["paths"])
-    else:
-        paths = "غير محدد"
+                paths = "غير محدد"
 
-    st.markdown(f"""
-    <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-        <h3 style='margin-bottom: 10px;'>{name}</h3>
-        <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-        <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-        <p><strong> البرامج المتاحة:</strong> {paths}</p>
-    </div>
-    """, unsafe_allow_html=True)
+            st.markdown(f"""
+            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+                <h3 style='margin-bottom: 10px;'>{name}</h3>
+                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
+                <p><strong>البرامج المتاحة:</strong> {paths}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
+        st.markdown("""
+        <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
+            📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
+        </div>
+        """, unsafe_allow_html=True)
     else:
         st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك. جرّب مجال آخر أو تحقق من بياناتك.")
+
