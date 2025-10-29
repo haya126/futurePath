@@ -498,7 +498,19 @@ if st.button("اقترح التخصصات"):
     if matched:
         st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-            paths = ", ".join(data["paths"]) if "paths" in data and isinstance(data["paths"], list) else "غير محدد"
+            tif "paths" in data:
+    if isinstance(data["paths"], list):
+        # Check if it's a list of dicts with "name" key
+        if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
+            paths = ", ".join(p["name"] for p in data["paths"])
+        else:
+            # It's a list of strings
+            paths = ", ".join(data["paths"])
+    else:
+        paths = str(data["paths"])
+else:
+    paths = "غير محدد"
+
             st.markdown(f"""
             <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
