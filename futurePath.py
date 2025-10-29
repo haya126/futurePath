@@ -156,7 +156,6 @@ else:
 
 # --- جامعة الكويت ---
 kuwait_university_colleges = OrderedDict({
-    kuwait_university_colleges = OrderedDict({
     "كلية الطب": {
       "stream": "علمي",
       "weights": {"gpa": 75, "english": 15, "math": 10},
@@ -423,8 +422,6 @@ kuwait_university_colleges = OrderedDict({
         {"name": "الخدمة الاجتماعية", "min_score": 70.35}
        ]
     }
-
-})
 })
 
 # --- الجامعة الأمريكية في الشرق الأوسط (AUM) ---
