@@ -498,26 +498,25 @@ if st.button("اقترح التخصصات"):
     if matched:
         st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-            tif "paths" in data:
-    if isinstance(data["paths"], list):
-        # Check if it's a list of dicts with "name" key
-        if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
-            paths = ", ".join(p["name"] for p in data["paths"])
+    if "paths" in data:
+        if isinstance(data["paths"], list):
+            if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
+                paths = ", ".join(p["name"] for p in data["paths"])
+            else:
+                paths = ", ".join(data["paths"])
         else:
-            # It's a list of strings
-            paths = ", ".join(data["paths"])
+            paths = str(data["paths"])
     else:
-        paths = str(data["paths"])
-else:
-    paths = "غير محدد"
+        paths = "غير محدد"
 
-            st.markdown(f"""
-            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                <p><strong>البرامج المتاحة:</strong> {paths}</p>
-            </div>
-            """, unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+        <h3 style='margin-bottom: 10px;'>{name}</h3>
+        <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+        <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+        <p><strong> البرامج المتاحة:</strong> {paths}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
     else:
         st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك. جرّب مجال آخر أو تحقق من بياناتك.")
