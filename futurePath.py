@@ -498,7 +498,7 @@ if st.button("اقترح التخصصات"):
     if matched:
         st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-            paths = ", ".join(data.get("paths", [])) if "paths" in data else "غير محدد"
+            paths = ", ".join(data["paths"]) if "paths" in data and isinstance(data["paths"], list) else "غير محدد"
             st.markdown(f"""
             <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
