@@ -11,7 +11,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.set_page_config(page_title="Future Path", layout="centered")
+st.set_page_config(page_title="تخصصي", layout="centered")
 
 # ------------------ GLOBAL STYLE ------------------
 st.markdown("""
