@@ -118,16 +118,7 @@ with col2:
     st.markdown("<h1 style='margin-top: 5px;'>Kuwait University</h1>", unsafe_allow_html=True)
 
 
-# --- Optional info (can be customized per university) ---
-info = {
-    "جامعة الكويت": "KU is the oldest and largest public university in Kuwait offering a wide range of programs.",
-    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "AUM provides American-style education with strong focus on engineering and business.",
-    "الجامعة الأمريكية في الكويت (AUK)": "AUK offers a liberal arts education based on the American model.",
-    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "GUST is known for its modern campus and business, media, and computer programs."
-}
 
-st.write("---")
-st.markdown(f"**نبذة عن الجامعة:** {info[university]}")
 
 
 st.markdown("<h1 style='text-align: center;'> بحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
