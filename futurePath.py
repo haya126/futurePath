@@ -99,43 +99,31 @@ university = st.selectbox(
         "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)"
     ]
 )
-# --- Logo Mapping ---
+# ------------------ UNIVERSITY SELECTION WITH LOGO ------------------
 logo_map = {
-    "جامعة الكويت": "images/ku_logo.png",
-    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "images/aum_logo.png",
-    "الجامعة الأمريكية في الكويت (AUK)": "images/auk_logo.png",
-    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "images/gust_logo.png"
+    "جامعة الكويت": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Kuwait_University_logo.png/320px-Kuwait_University_logo.png",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/AUK_Logo.png/320px-AUK_Logo.png",
+    "الجامعة الأمريكية في الكويت (AUK)": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/AUK_Logo.png/320px-AUK_Logo.png",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "https://upload.wikimedia.org/wikipedia/en/thumb/8/85/GUST_logo.png/320px-GUST_logo.png"
 }
 
+# Single selectbox for Arabic names
+university = st.selectbox("اختر الجامعة:", list(logo_map.keys()))
 
-
-
-
-
-
-# Example logo_map
-logo_map = {
-    "Kuwait University": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Kuwait_University_logo.png/320px-Kuwait_University_logo.png",
-    "American University of Kuwait": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/AUK_Logo.png/320px-AUK_Logo.png",
-    "Gulf University for Science and Technology": "https://upload.wikimedia.org/wikipedia/en/thumb/8/85/GUST_logo.png/320px-GUST_logo.png"
-}
-
-# Dropdown to select a university
-selected_uni = st.selectbox("اختر الجامعة:", list(logo_map.keys()))
-
-# Show the selected university logo + name
-if selected_uni in logo_map:
+# Display logo + name for the selected university
+if university in logo_map:
     st.markdown(
         f"""
         <div style="display: flex; justify-content: center; margin-top: 20px;">
             <div class="uni-box">
-                <img src="{logo_map[selected_uni]}" class="uni-logo">
-                <div class="uni-name">{selected_uni}</div>
+                <img src="{logo_map[university]}" class="uni-logo">
+                <div class="uni-name">{university}</div>
             </div>
         </div>
         """,
         unsafe_allow_html=True
     )
+
 
 
 
