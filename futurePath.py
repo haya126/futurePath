@@ -90,15 +90,7 @@ st.markdown("""
 # ------------------ UNIVERSITY SELECTION ------------------
 st.markdown("<h1 style='text-align: right;'>تخصصي</h1>", unsafe_allow_html=True)
 
-university = st.selectbox(
-    "اختر الجامعة:",
-    [
-        "جامعة الكويت",
-        "الجامعة الأمريكية في الشرق الأوسط (AUM)",
-        "الجامعة الأمريكية في الكويت (AUK)",
-        "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)"
-    ]
-)
+
 # ------------------ UNIVERSITY SELECTION WITH LOGO ------------------
 logo_map = {
     "جامعة الكويت": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Kuwait_University_logo.png/320px-Kuwait_University_logo.png",
