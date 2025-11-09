@@ -103,10 +103,19 @@ logo_map = {
 # Single selectbox for Arabic names
 university = st.selectbox("اختر الجامعة:", list(logo_map.keys()))
 
+# Display logo + name for the selected university
 if university in logo_map:
-    st.image(logo_map[university], width=120)  # adjust width as you like
-    st.markdown(f"<h3 style='text-align:center;'>{university}</h3>", unsafe_allow_html=True)
-
+    st.markdown(
+        f"""
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <div class="uni-box">
+                <img src="{logo_map[university]}" class="uni-logo">
+                <div class="uni-name">{university}</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 
