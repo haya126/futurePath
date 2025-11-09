@@ -108,35 +108,22 @@ logo_map = {
 }
 
 
-# --- Display Logo ---
+
+
+
+
+
+university = "Kuwait University"
+
+# Make sure the logo_map has a correct direct URL or local path for Streamlit
+logo_map = {
+    "Kuwait University": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Kuwait_University_logo.png/320px-Kuwait_University_logo.png"
+}
+
+# Display university logo + name centered
 if university in logo_map:
     st.markdown(
         f"""
-        <style>
-        .uni-box {{
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;  /* keep logo next to name */
-            border-radius: 12px;
-            padding: 8px 16px;
-            margin-top: 15px;
-            width: fit-content;
-            background: #fffaf0;  /* subtle background for attractiveness */
-        }}
-        .uni-logo {{
-            width: 70px;   /* slightly bigger */
-            height: 70px;
-            border-radius: 10px;
-            margin-left: 12px;
-        }}
-        .uni-name {{
-            font-size: 26px;  /* slightly bigger text */
-            font-weight: 700;
-            color: #2C2C2C;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }}
-        </style>
-
         <div class="uni-box">
             <img src="{logo_map[university]}" class="uni-logo">
             <div class="uni-name">{university}</div>
@@ -144,6 +131,9 @@ if university in logo_map:
         """,
         unsafe_allow_html=True
     )
+
+
+
 
 
 
