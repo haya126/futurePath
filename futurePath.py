@@ -579,7 +579,7 @@ if st.button("اقترح التخصصات"):
                  <h3 style='margin-bottom: 10px;'>{name}</h3>
                  <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
                  <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                 <p><strong>البرامج المتاحة:</strong> {paths}</p>
+                 <p><strong>المسارات :</strong> {paths}</p>
             </div>
             """, unsafe_allow_html=True)
 
