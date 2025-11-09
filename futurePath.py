@@ -102,6 +102,31 @@ logo_map = {
 if university in logo_map:
     st.markdown(
         f"""
+        <style>
+        .uni-box {{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;  /* keep logo next to name */
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-top: 15px;
+            width: fit-content;
+            background: #fffaf0;  /* subtle background for attractiveness */
+        }}
+        .uni-logo {{
+            width: 70px;   /* slightly bigger */
+            height: 70px;
+            border-radius: 10px;
+            margin-left: 12px;
+        }}
+        .uni-name {{
+            font-size: 26px;  /* slightly bigger text */
+            font-weight: 700;
+            color: #2C2C2C;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }}
+        </style>
+
         <div class="uni-box">
             <img src="{logo_map[university]}" class="uni-logo">
             <div class="uni-name">{university}</div>
@@ -110,12 +135,7 @@ if university in logo_map:
         unsafe_allow_html=True
     )
 
-    # University title and logo side-by-side
-col1, col2 = st.columns([1, 6])
-with col1:
-    st.image("images/ku_logo.png", width=50)  # smaller size
-with col2:
-    st.markdown("<h1 style='margin-top: 5px;'>Kuwait University</h1>", unsafe_allow_html=True)
+
 
 
 
@@ -132,7 +152,7 @@ if university == "جامعة الكويت":
     arabic = st.number_input("درجة القدرات – عربي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
     french = st.number_input("درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", 0.0, 100.0, step=0.01, format="%g")
 else:
-    st.subheader("أدخل بياناتك")
+    st.subheader("أدخل درجاتك")
     gpa = st.number_input("معدل الثانوية العامة ٪", 0.0, 100.0, step=0.01, format="%g")
     english = st.number_input("درجة اختبار اللغة الإنجليزية ٪", 0.0, 100.0, step=0.01, format="%g")
     math, arabic, french = 0, 0, 0
