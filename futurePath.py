@@ -77,9 +77,9 @@ logo_map = {
 if university in logo_map:
     st.markdown(
         f"""
-        <div class="logo-container">
-            <img src="{logo_map[university]}" width="180" style="border-radius:12px; margin-bottom:10px;">
-            <h2 style="color:#2C2C2C;">{university}</h2>
+        <div style="display: flex; align-items: center; justify-content: center; direction: rtl; margin: 15px 0;">
+            <img src="{logo_map[university]}" width="60" style="border-radius:10px; margin-left:12px;">
+            <h2 style="color:#2C2C2C; font-weight:600; margin:0;">{university}</h2>
         </div>
         """,
         unsafe_allow_html=True
