@@ -561,16 +561,18 @@ if st.button("اقترح التخصصات"):
             matched.append((name, data, final_score))
 
     if matched:
-        st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
-        for name, data, final_score in matched:
-            if "paths" in data:
-                if isinstance(data["paths"], list) and all(isinstance(p, dict) for p in data["paths"]):
-                    paths_html = "".join(f"<li>{p['name']} ({p['min_score']})</li>" for p in data["paths"])
-                    paths = f"<ul style='margin: 0 0 0 20px;'>{paths_html}</ul>"
-                else:
-                    paths = ", ".join(data["paths"])
-          else:
-              paths = "غير محدد"
+    st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
+    for name, data, final_score in matched:
+        # Handle paths with min_score
+        if "paths" in data:
+            if isinstance(data["paths"], list) and all(isinstance(p, dict) for p in data["paths"]):
+                # Create bullet points with min_score
+                paths_html = "".join(f"<li>{p['name']} ({p['min_score']})</li>" for p in data["paths"])
+                paths = f"<ul style='margin: 0 0 0 20px;'>{paths_html}</ul>"
+            else:
+                paths = ", ".join(data["paths"])
+        else:
+            paths = "غير محدد"
 
         st.markdown(f"""
         <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
@@ -581,12 +583,10 @@ if st.button("اقترح التخصصات"):
         </div>
         """, unsafe_allow_html=True)
 
-
-        st.markdown("""
-        <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
-            📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك. جرّب مجال آخر أو تحقق من بياناتك.")
-
+    st.markdown("""
+    <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
+        📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
+    </div>
+    """, unsafe_allow_html=True)
+else:
+    st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك. جرّب مجال آخر أو تحقق من بياناتك.")
