@@ -54,7 +54,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTION ------------------
-st.markdown("<h1 style='text-align: right;'>وجهتي</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: right;'>تخصصي</h1>", unsafe_allow_html=True)
 
 university = st.selectbox(
     "اختر الجامعة:",
@@ -65,6 +65,160 @@ university = st.selectbox(
         "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)"
     ]
 )
+# --- Logo Mapping ---
+logo_map = {
+    "جامعة الكويت": "images/ku_logo.png",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "images/aum_logo.png",
+    "الجامعة الأمريكية في الكويت (AUK)": "images/auk_logo.png",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "images/gust_logo.png"
+}
+
+# --- Display Logo ---
+if university in logo_map:
+    st.markdown(
+        f"""
+        <div class="logo-container">
+            <img src="{logo_map[university]}" width="180" style="border-radius:12px; margin-bottom:10px;">
+            <h2 style="color:#2C2C2C;">{university}</h2>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# --- Optional info (can be customized per university) ---
+info = {
+    "جامعة الكويت": "KU is the oldest and largest public university in Kuwait offering a wide range of programs.",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "AUM provides American-style education with strong focus on engineering and business.",
+    "الجامعة الأمريكية في الكويت (AUK)": "AUK offers a liberal arts education based on the American model.",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "GUST is known for its modern campus and business, media, and computer programs."
+}
+
+st.write("---")
+st.markdown(f"**نبذة عن الجامعة:** {info[university]}")
+
+📁 Folder structure example
+Make sure your project looks like this:
+project-folder/
+│
+├─ app.py   ← (this file)
+└─ images/
+   ├─ ku_logo.png
+   ├─ aum_logo.png
+   ├─ auk_logo.png
+   └─ gust_logo.png
+Would you like me to make the logos clickable (so that clicking the image opens the university’s website in a new tab)?
+You said:
+for the logo I dont want it show show big like I want it to show next the name of the univ
+ChatGPT said:
+Perfect — you want a compact, modern layout where the university logo appears next to the name (on the same line), instead of centered and large.
+Here’s your updated full Streamlit code with that change:
+✅ Logo aligned beside the university name
+✅ Clean design with right-to-left (Arabic) layout
+✅ Consistent sizing and spacing
+
+🧩 Full Streamlit Code (logo beside name)
+import streamlit as st
+
+# --- Page Configuration ---
+st.set_page_config(
+    page_title="University Selector",
+    page_icon="🎓",
+    layout="centered"
+)
+
+# --- Custom CSS Styling ---
+st.markdown("""
+<style>
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+img {
+  animation: fadeIn 1s ease;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  color: #2C2C2C;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  direction: rtl;
+}
+
+/* University box */
+.uni-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  margin-top: 30px;
+  direction: rtl;
+}
+
+.uni-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.uni-name {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --- App Header ---
+st.markdown("<div class='title'>🎓 اختر الجامعة</div>", unsafe_allow_html=True)
+st.write("حدد الجامعة التي ترغب بعرض شعارها:")
+
+# --- University Dropdown ---
+universities = [
+    "جامعة الكويت",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)",
+    "الجامعة الأمريكية في الكويت (AUK)",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)"
+]
+university = st.selectbox("اختر الجامعة:", universities)
+
+# --- Logo Mapping ---
+logo_map = {
+    "جامعة الكويت": "ku_logo.png",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "aum_logo.png",
+    "الجامعة الأمريكية في الكويت (AUK)": "auk_logo.png",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "gust_logo.png"
+}
+
+# --- Display logo + name beside each other ---
+if university in logo_map:
+    st.markdown(
+        f"""
+        <div class="uni-box">
+            <img src="{logo_map[university]}" class="uni-logo">
+            <div class="uni-name">{university}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# --- Optional info text ---
+info = {
+    "جامعة الكويت": "KU is the oldest and largest public university in Kuwait offering a wide range of programs.",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "AUM provides American-style education with strong focus on engineering and business.",
+    "الجامعة الأمريكية في الكويت (AUK)": "AUK offers a liberal arts education based on the American model.",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "GUST is known for its modern campus and business, media, and computer programs."
+}
+
+st.write("---")
+st.markdown(f"**نبذة عن الجامعة:** {info[university]}")
 
 st.markdown("<h1 style='text-align: center;'> بحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
