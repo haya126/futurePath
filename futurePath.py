@@ -93,11 +93,12 @@ st.markdown("<h1 style='text-align: right;'>تخصصي</h1>", unsafe_allow_html=
 
 # ------------------ UNIVERSITY SELECTION WITH LOGO ------------------
 logo_map = {
-    "جامعة الكويت": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Kuwait_University_logo.png/320px-Kuwait_University_logo.png",
-    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/AUK_Logo.png/320px-AUK_Logo.png",
-    "الجامعة الأمريكية في الكويت (AUK)": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/AUK_Logo.png/320px-AUK_Logo.png",
-    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "https://upload.wikimedia.org/wikipedia/en/thumb/8/85/GUST_logo.png/320px-GUST_logo.png"
+    "جامعة الكويت": "https://upload.wikimedia.org/wikipedia/en/1/1c/Kuwait_University_logo.png",
+    "الجامعة الأمريكية في الشرق الأوسط (AUM)": "https://upload.wikimedia.org/wikipedia/en/0/0c/AUM_Kuwait_logo.png",
+    "الجامعة الأمريكية في الكويت (AUK)": "https://upload.wikimedia.org/wikipedia/en/3/36/AUK_Logo.png",
+    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "https://upload.wikimedia.org/wikipedia/en/8/85/GUST_logo.png"
 }
+
 
 # Single selectbox for Arabic names
 university = st.selectbox("اختر الجامعة:", list(logo_map.keys()))
