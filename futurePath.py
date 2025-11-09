@@ -561,28 +561,26 @@ if st.button("اقترح التخصصات"):
             matched.append((name, data, final_score))
 
     if matched:
-        st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
-        for name, data, final_score in matched:
-            # Correctly handle paths
-            if "paths" in data:
-                if isinstance(data["paths"], list):
-                    if all(isinstance(p, dict) and "name" in p for p in data["paths"]):
-                        paths = ", ".join(p["name"] for p in data["paths"])
-                    else:
-                        paths = ", ".join(data["paths"])
-                else:
-                    paths = str(data["paths"])
+    st.success("هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
+    for name, data, final_score in matched:
+        # Handle paths with min_score
+        if "paths" in data:
+            if isinstance(data["paths"], list) and all(isinstance(p, dict) for p in data["paths"]):
+                paths_html = "".join(f"<li>{p['name']} ({p['min_score']})</li>" for p in data["paths"])
+                paths = f"<ul style='margin: 0 0 0 20px;'>{paths_html}</ul>"
             else:
-                paths = "غير محدد"
+                paths = ", ".join(data["paths"])
+        else:
+            paths = "غير محدد"
 
-            st.markdown(f"""
-            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                <p><strong>البرامج المتاحة:</strong> {paths}</p>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+            <h3 style='margin-bottom: 10px;'>{name}</h3>
+            <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+            <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            <p><strong>البرامج المتاحة:</strong> {paths}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("""
         <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
