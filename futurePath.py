@@ -54,14 +54,14 @@ st.markdown("""
         /* --- University logo + name box --- */
         .uni-box {
             display: flex;
-            align-items: center;        /* vertically center logo and name */
-            justify-content: flex-start;/* left alignment in RTL */
-            gap: 15px;                  /* space between logo and name */
+            align-items: center;
+            justify-content: center; /* center horizontally */
+            gap: 15px;
             padding: 10px 20px;
             border-radius: 12px;
             background-color: #ffffff;
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
+            margin: 15px auto; /* center in the page */
             transition: transform 0.2s;
         }
 
@@ -84,6 +84,7 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 # ------------------ UNIVERSITY SELECTION ------------------
