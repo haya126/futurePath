@@ -84,6 +84,13 @@ if university in logo_map:
         """,
         unsafe_allow_html=True
     )
+    # University title and logo side-by-side
+col1, col2 = st.columns([1, 6])
+with col1:
+    st.image("images/ku_logo.png", width=50)  # smaller size
+with col2:
+    st.markdown("<h1 style='margin-top: 5px;'>Kuwait University</h1>", unsafe_allow_html=True)
+
 
 # --- Optional info (can be customized per university) ---
 info = {
