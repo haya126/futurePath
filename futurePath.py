@@ -51,27 +51,35 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* --- Compact logo + name styling --- */
+        /* --- University logo + name box --- */
         .uni-box {
             display: flex;
-            align-items: center;         /* vertically center logo and name */
-            justify-content: flex-start; /* align left-to-right in RTL layout */
-            gap: 12px;                   /* space between logo and name */
-            padding: 8px 15px;
-            border-radius: 10px;
-            background-color: #f5f5f5;
+            align-items: center;        /* vertically center logo and name */
+            justify-content: flex-start;/* left alignment in RTL */
+            gap: 15px;                  /* space between logo and name */
+            padding: 10px 20px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .uni-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.15);
         }
 
         .uni-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .uni-name {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
             color: #2C2C2C;
         }
     </style>
@@ -97,6 +105,7 @@ logo_map = {
     "الجامعة الأمريكية في الكويت (AUK)": "images/auk_logo.png",
     "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": "images/gust_logo.png"
 }
+
 
 # --- Display Logo ---
 if university in logo_map:
