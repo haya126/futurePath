@@ -2,70 +2,32 @@
 from collections import OrderedDict
 import streamlit as st
 
-
 # ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
-# Hide Streamlit default menu, footer, and header
 st.markdown("""
     <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     </style>
-    """, unsafe_allow_html=True)
-
-
+""", unsafe_allow_html=True)
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-        body {
-            direction: rtl;
-            text-align: right;
-            background-color: #F9F7F1;
-        }
-
-        * {
-            font-family: 'Tajawal', sans-serif !important;
-        }
-
-        .main > div:first-child > div > div > div > div {
-            display: flex;
-            justify-content: center;
-        }
-
-        h1, h2 {
-            text-align: center !important;
-            font-weight: 700;
-            color: #2C2C2C;
-            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        label, .stNumberInput label {
-            font-size: 16px;
-            font-weight: 500;
-            color: #444;
-        }
-
+        body { direction: rtl; text-align: right; background-color: #F9F7F1; }
+        * { font-family: 'Tajawal', sans-serif !important; }
+        .main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
+        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
+        label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input {
-            text-align: right;
-            font-size: 15px;
-        }
-
-        .stNumberInput {
-            margin-bottom: 20px;
-        }
+        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
+        .stNumberInput { margin-bottom: 20px; }
     </style>
 """, unsafe_allow_html=True)
 
-
-
 # ------------------ UI TITLE ------------------
-st.markdown("""
-<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>
-""", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTOR ------------------
 university = st.selectbox(
@@ -98,6 +60,11 @@ interest = st.selectbox(" شنو نوع التخصصات اللي تميل له�
     "التربية والتعليم 👩‍🏫"
 ])
 
+# ------------------ STREAM SELECTOR ------------------
+st.subheader("اختر المسار الثانوي")
+stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
+
+# ------------------ KU COLLEGES ------------------
 # ------------------ YOUR ORIGINAL KU COLLEGE DATA (UNMODIFIED) ------------------
 
 colleges = OrderedDict({
@@ -436,16 +403,9 @@ gust_colleges = {
         "paths": ["English Literature", "Mass Communication", "Public Relations", "Linguistics"]
     }
 }
-
-
-# ------------------ STREAM SELECTOR ------------------
-st.subheader("اختر المسار الثانوي")
-stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
-
 # ========================== MAIN RESULTS =============================
 if st.button(" اقترح التخصصات"):
-
-    # Select the correct college data based on university
+    # Select correct university
     if university == "جامعة الكويت":
         uni_colleges = colleges
     elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
@@ -460,7 +420,7 @@ if st.button(" اقترح التخصصات"):
     matched = []
 
     for name, data in uni_colleges.items():
-        # Check stream only if available
+        # Stream check
         if "stream" in data and data["stream"] != stream:
             continue
         if interest not in data.get("interests", []):
@@ -468,8 +428,6 @@ if st.button(" اقترح التخصصات"):
 
         weights = data.get("weights", {})
         score = 0
-
-        # Weighted calculation
         if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
         if "math" in weights: score += math * (weights.get("math", 0) / 100)
         if "english" in weights: score += english * (weights.get("english", 0) / 100)
@@ -489,10 +447,13 @@ if st.button(" اقترح التخصصات"):
             if "paths" in data and data["paths"]:
                 paths_html = "<p><strong> المسارات:</strong></p><ul>"
                 for p in data["paths"]:
-                    if final_score >= p.get("min_score", 0):
-                        paths_html += f"<li style='color:green;font-weight:bold;'>✔ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                    if isinstance(p, dict):
+                        if final_score >= p.get("min_score", 0):
+                            paths_html += f"<li style='color:green;font-weight:bold;'>✔ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                        else:
+                            paths_html += f"<li style='color:red;'>✘ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
-                        paths_html += f"<li style='color:red;'>✘ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                        paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
 
             st.markdown(f"""
