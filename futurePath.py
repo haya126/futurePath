@@ -75,7 +75,6 @@ university = st.selectbox(
         "جامعة الشرق الأوسط الأمريكية (AUM)",
         "جامعة الخليج للعلوم والتكنولوجيا (GUST)",
         "الجامعة الأمريكية في الكويت (AUK)",
-        "جامعة الكويت للعلوم الطبية"
     ]
 )
 
@@ -444,57 +443,57 @@ st.subheader("اختر المسار الثانوي")
 stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
 
 # ========================== MAIN RESULTS =============================
-if st.button(" اقترح التخصصات"):
+        if st.button(" اقترح التخصصات"):
+    # Select the correct college data based on university
+    if university == "جامعة الكويت":
+        uni_colleges = colleges
+    elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
+        uni_colleges = aum_colleges
+    elif university == "الجامعة الأمريكية في الكويت (AUK)":
+        uni_colleges = auk_colleges
+    elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
+        uni_colleges = gust_colleges
+    else:
+        uni_colleges = {}
 
-    if university != "جامعة الكويت":
-        st.info("📌 دعم التخصصات لباقي الجامعات سيضاف قريباً. الآن النتائج خاصة بجامعة الكويت.")
-    
     matched = []
 
-    for name, data in colleges.items():
+    for name, data in uni_colleges.items():
+        # Check stream only if available
         if "stream" in data and data["stream"] != stream:
             continue
-        if interest not in data["interests"]:
+        if interest not in data.get("interests", []):
             continue
 
-        weights = data["weights"]
-
-        if isinstance(weights, dict) and stream in weights:
-            selected_weights = weights[stream]
-        elif isinstance(weights, dict) and "gpa" in weights:
-            selected_weights = weights
-        else:
-            continue
-
+        weights = data.get("weights", {})
         score = 0
-        if "gpa" in selected_weights: score += gpa * (selected_weights["gpa"] / 100)
-        if "math" in selected_weights: score += math * (selected_weights["math"] / 100)
-        if "english" in selected_weights: score += english * (selected_weights["english"] / 100)
-        if "arabic" in selected_weights: score += arabic * (selected_weights["arabic"] / 100)
-        if "french" in selected_weights: score += french * (selected_weights["french"] / 100)
+
+        # Weighted calculation
+        if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
+        if "math" in weights: score += math * (weights.get("math", 0) / 100)
+        if "english" in weights: score += english * (weights.get("english", 0) / 100)
+        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
+        if "french" in weights: score += french * (weights.get("french", 0) / 100)
 
         final_score = round(score, 2)
 
-        if final_score >= data["min_score"]:
+        if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
-    # ------------------ OUTPUT RESULTS ------------------
+    # Display results
     if matched:
-        st.success(" هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
+        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
-
-            # -------- PATHS WITH GREEN/RED SUPPORT ---------
             paths_html = ""
             if "paths" in data and data["paths"]:
                 paths_html = "<p><strong> المسارات:</strong></p><ul>"
                 for p in data["paths"]:
-                    if final_score >= p["min_score"]:
+                    if final_score >= p.get("min_score", 0):
                         paths_html += f"<li style='color:green;font-weight:bold;'>✔ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
                         paths_html += f"<li style='color:red;'>✘ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                 paths_html += "</ul>"
 
-            # -------- DISPLAY CARD ---------
             st.markdown(f"""
             <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
@@ -504,13 +503,6 @@ if st.button(" اقترح التخصصات"):
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("""
-        <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
-            📌 <em>المعلومات مبنية على بيانات رسمية من جامعة الكويت للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
-        </div>
-        """, unsafe_allow_html=True)
-
     else:
-        st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك.")
-
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
 
