@@ -414,56 +414,63 @@ gust_colleges = {
         "paths": ["English Literature", "Mass Communication", "Public Relations", "Linguistics"]
     }
 }
-universities = {
-    "جامعة الكويت": kuwait_university_colleges,
-    "الجامعة الأمريكية في الشرق الأوسط (AUM)": aum_colleges,
-    "الجامعة الأمريكية في الكويت (AUK)": auk_colleges,
-    "الجامعة الخليجية للعلوم والتكنولوجيا (GUST)": gust_colleges
-}
+# List of universities
+universities = ["جامعة الكويت", "جامعة الخليج (GUST)", "الجامعة الأمريكية (AUK)", "جامعة الشرق الأوسط (AUM)"]
 
-# ------------------ SCORE CALCULATOR ------------------
-def calculate_score(weights):
-    score = 0
-    for key, weight in weights.items():
-        score += locals().get(key, 0) * (weight / 100)
-    return round(score, 2)
+# --- Streamlit UI ---
+st.title("🎓 نظام ترشيح التخصصات الجامعية")
 
-# ------------------ RESULTS ------------------
-if st.button("إظهار التخصصات المناسبة"):
-    for uni_name, colleges in universities.items():
-        st.markdown(f"### 🏫 {uni_name}")
-        uni_matches = 0
+# User selects university
+university = st.selectbox("اختر الجامعة:", universities)
 
-        for college_name, college_data in colleges.items():
-            if college_data.get("stream", stream) != stream:
-                continue
+# Input fields
+gpa = st.number_input("📊 المعدل التراكمي (من 100):", min_value=0.0, max_value=100.0, value=85.0)
+math = st.number_input("🧮 درجة الرياضيات:", min_value=0.0, max_value=100.0, value=90.0)
+english = st.number_input("📘 درجة الإنجليزي:", min_value=0.0, max_value=100.0, value=80.0)
+arabic = st.number_input("📕 درجة العربي:", min_value=0.0, max_value=100.0, value=85.0)
 
-            weights = None
-            if "weights" in college_data:
-                if isinstance(college_data["weights"], dict) and "default" not in college_data["weights"]:
-                    weights = college_data["weights"]
-                else:
-                    weights = college_data["weights"].get("default", college_data["weights"])
+interest = st.selectbox("🎯 مجال الاهتمام:", ["هندسة", "علوم", "طب", "آداب", "تقنية", "لغة", "إدارة", "قانون"])
 
-            score = calculate_score(weights)
-            if score >= college_data["min_score"]:
-                uni_matches += 1
-                st.markdown(f"""
-                    <div class="result-card">
-                        <strong>{college_name}</strong><br>
-                        معدلك: {score}٪ — الحد الأدنى: {college_data["min_score"]}٪<br>
-                        عدد السنوات: {college_data["years"]} سنوات
-                """, unsafe_allow_html=True)
+# Display results only for الكويت الجامعة as an example
+if university == "جامعة الكويت":
+    st.subheader("🏛️ التخصصات المتاحة بناءً على بياناتك")
+    
+    results_found = False
+    
+    for college_name, college_data in kuwait_university_colleges.items():
+        # Skip if interest doesn't match
+        if interest not in college_data["interests"]:
+            continue
+        
+        # Calculate معدل المكافئ
+        weights = college_data["weights"]
+        composite = (
+            (weights.get("gpa", 0) * gpa / 100) +
+            (weights.get("math", 0) * math / 100) +
+            (weights.get("english", 0) * english / 100) +
+            (weights.get("arabic", 0) * arabic / 100)
+        )
 
-                if "paths" in college_data:
-                    st.markdown("<em>المسارات المتاحة:</em>", unsafe_allow_html=True)
-                    for path in college_data["paths"]:
-                        path_score = "green" if score >= path["min_score"] else "red"
-                        st.markdown(
-                            f'<div class="path {path_score}">{path["name"]} — الحد الأدنى: {path["min_score"]}٪</div>',
-                            unsafe_allow_html=True
-                        )
-                st.markdown("</div>", unsafe_allow_html=True)  # End of result-card
+        # Show college if you meet minimum score
+        if composite >= college_data["min_score"]:
+            results_found = True
+            st.markdown(f"### 🎓 {college_name}")
+            st.write(f"⚖️ معدل المكافئ: **{composite:.2f}**")
+            st.write(f"⏳ عدد سنوات الدراسة: {college_data['years']}")
 
-        if uni_matches == 0:
-            st.info(f"لا يوجد تخصص في {uni_name} يناسب درجاتك الحالية.", icon="❗")
+            # Display paths (if they exist)
+            if "paths" in college_data:
+                st.markdown("<b>📌 المسارات المتاحة:</b>", unsafe_allow_html=True)
+                for path in college_data["paths"]:
+                    if composite >= path["min_score"]:
+                        st.markdown(f"<span style='color: green; font-weight: bold;'>✔ {path['name']} (الحد الأدنى: {path['min_score']})</span>", unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"<span style='color: red;'>✘ {path['name']} (الحد الأدنى: {path['min_score']})</span>", unsafe_allow_html=True)
+            st.write("---")
+    
+    if not results_found:
+        st.warning("ما في تخصصات مطابقة حالياً. جرب تغيير الاهتمام أو تحسين درجاتك. 💡")
+
+else:
+    st.info(f"🚧 الدعم الكامل لـ {university} سيتم إضافته قريبًا!")
+
