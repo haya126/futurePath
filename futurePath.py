@@ -30,6 +30,7 @@ st.markdown("""
 st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTOR ------------------
+# ------------------ UNIVERSITY SELECTOR ------------------
 university = st.selectbox(
     "اختر الجامعة:",
     [
@@ -40,13 +41,27 @@ university = st.selectbox(
     ]
 )
 
-# ------------------ INPUTS ------------------
+# ------------------ CONDITIONAL INPUTS ------------------
 st.subheader("أدخل درجاتك")
-gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-math = st.number_input(" درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-arabic = st.number_input(" درجة القدرات – عربي ٪  (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+
+if university == "جامعة الكويت":
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    math = st.number_input(" درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    arabic = st.number_input(" درجة القدرات – عربي ٪  (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+
+elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
+
+elif university == "الجامعة الأمريكية في الكويت (AUK)":
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
+
+elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
 
 # ------------------ INTEREST SELECTOR ------------------
 st.subheader("اختيار مجال اهتمامك")
@@ -63,6 +78,7 @@ interest = st.selectbox(" شنو نوع التخصصات اللي تميل له�
 # ------------------ STREAM SELECTOR ------------------
 st.subheader("اختر المسار الثانوي")
 stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
+
 
 # ------------------ KU COLLEGES ------------------
 # ------------------ YOUR ORIGINAL KU COLLEGE DATA (UNMODIFIED) ------------------
