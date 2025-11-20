@@ -12,13 +12,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
+
+# ------------------ PAGE STYLING ------------------
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
         body { direction: rtl; text-align: right; background-color: #F9F7F1; }
         * { font-family: 'Tajawal', sans-serif !important; }
-        .main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
-        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
+        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
         label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
         .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
@@ -30,8 +31,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ------------------ UI TITLE ------------------
-st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
+# ------------------ TITLE ------------------
+st.markdown("<h1>ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTOR ------------------
 university = st.selectbox(
@@ -40,13 +41,12 @@ university = st.selectbox(
         "جامعة الكويت",
         "جامعة الشرق الأوسط الأمريكية (AUM)",
         "جامعة الخليج للعلوم والتكنولوجيا (GUST)",
-        "الجامعة الأمريكية في الكويت (AUK)",
+        "الجامعة الأمريكية في الكويت (AUK)"
     ]
 )
 
-# ------------------ INTEREST SELECTOR ------------------
-st.subheader("اختيار مجال اهتمامك")
-interest = st.selectbox(" شنو نوع التخصصات اللي تميل لها أكثر؟", [
+# ------------------ INTEREST & STREAM ------------------
+interest = st.selectbox("اختر مجال اهتمامك:", [
     "المجال الطبي والصحي 🏥",
     "الهندسة والتقنية ⚙️",
     "التحليل والرياضيات 📊",
@@ -56,45 +56,44 @@ interest = st.selectbox(" شنو نوع التخصصات اللي تميل له�
     "التربية والتعليم 👩‍🏫"
 ])
 
-# ------------------ STREAM SELECTOR ------------------
-st.subheader("اختر المسار الثانوي")
-stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
+stream = st.radio("اختر المسار:", ["علمي", "أدبي"])
 
-# ========================== UNIVERSITY-SPECIFIC INPUTS =============================
-gpa = math = english = arabic = french = None
-aum_english = aum_math = None
-gust_english = gust_math = None
-auk_english = auk_math = None
-
+# ------------------ UNIVERSITY-SPECIFIC INPUTS ------------------
 if university == "جامعة الكويت":
     st.subheader("أدخل درجاتك — جامعة الكويت")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    math = st.number_input("درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    english = st.number_input("درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    arabic = st.number_input("درجة القدرات – عربي ٪  (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    french = st.number_input("درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    math = st.number_input("درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input("درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
+    arabic = st.number_input("درجة القدرات – عربي ٪", min_value=0.0, max_value=100.0, step=0.01)
+    french = st.number_input("درجة القدرات – فرنسي ٪", min_value=0.0, max_value=100.0, step=0.01)
+else:
+    gpa = math = english = arabic = french = None
 
-elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
+if university == "جامعة الشرق الأوسط الأمريكية (AUM)":
     st.subheader("أدخل درجاتك — AUM")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    aum_english = st.number_input("AUM — English placement (٪)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    aum_math = st.number_input("AUM — Math placement (٪)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    aum_english = st.number_input("AUM — English placement ٪", min_value=0.0, max_value=100.0, step=0.01)
+    aum_math = st.number_input("AUM — Math placement ٪", min_value=0.0, max_value=100.0, step=0.01)
+else:
+    aum_english = aum_math = None
 
-elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
+if university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
     st.subheader("أدخل درجاتك — GUST")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    gust_english = st.number_input("GUST — English test (٪)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    gust_math = st.number_input("GUST — Math test (٪) — (إذا انضممت لمسار STEM)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    gust_english = st.number_input("GUST — English test ٪", min_value=0.0, max_value=100.0, step=0.01)
+    gust_math = st.number_input("GUST — Math test ٪", min_value=0.0, max_value=100.0, step=0.01)
+else:
+    gust_english = gust_math = None
 
-elif university == "الجامعة الأمريكية في الكويت (AUK)":
+if university == "الجامعة الأمريكية في الكويت (AUK)":
     st.subheader("أدخل درجاتك — AUK")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    auk_english = st.number_input("AUK — English placement (٪)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    auk_math = st.number_input("AUK — Math placement (٪) — (للمسارات العلمية)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    auk_english = st.number_input("AUK — English placement ٪", min_value=0.0, max_value=100.0, step=0.01)
+    auk_math = st.number_input("AUK — Math placement ٪", min_value=0.0, max_value=100.0, step=0.01)
+else:
+    auk_english = auk_math = None
 
-# ========================== UNIVERSITY DATA =============================
-# Add your KU, AUM, AUK, GUST colleges here exactly as before
-# (I kept your previous data unchanged for brevity in this snippet)
+# ------------------ UNIVERSITY DATA ------------------
 # ------------------ KU COLLEGES ------------------
 colleges = OrderedDict({
     "كلية الطب": {
@@ -432,28 +431,16 @@ gust_colleges = {
     }
 }
 
-
-
-# ------------------ HELPER FUNCTIONS ------------------
-def is_stem_path(college_name, interest, path_name=None):
-    stem_keywords = ["الهندسة", "Engineering", "علوم", "Computer", "Electrical", "Mechanical"]
-    if any(k in college_name for k in stem_keywords):
-        return True
-    if "الهندسة" in interest or "العلوم" in interest or "التحليل" in interest:
-        return True
-    if path_name and any(k in path_name for k in stem_keywords):
-        return True
-    return False
-
+# ------------------ SCORING FUNCTIONS ------------------
 def compute_ku_score(weights, gpa, english, math, arabic, french):
-    score = 0.0
-    if isinstance(weights, dict):
-        score += gpa * (weights.get("gpa", 0) / 100)
-        score += math * (weights.get("math", 0) / 100)
-        score += english * (weights.get("english", 0) / 100)
-        score += arabic * (weights.get("arabic", 0) / 100)
-        score += french * (weights.get("french", 0) / 100)
-    return round(score, 2)
+    score = 0
+    if weights:
+        score += gpa * (weights.get("gpa",0)/100)
+        score += math * (weights.get("math",0)/100)
+        score += english * (weights.get("english",0)/100)
+        score += arabic * (weights.get("arabic",0)/100)
+        score += french * (weights.get("french",0)/100)
+    return round(score,2)
 
 def compute_other_uni_score(university_key, college_name, interest, gpa, english_score, math_score):
     e = english_score or 0
@@ -461,23 +448,17 @@ def compute_other_uni_score(university_key, college_name, interest, gpa, english
     if university_key == "AUM":
         score = gpa * 0.6 + e * 0.25 + m * 0.15
     elif university_key == "GUST":
-        if is_stem_path(college_name, interest):
-            score = gpa * 0.6 + e * 0.3 + m * 0.1
-        else:
-            score = gpa * 0.6 + e * 0.4
+        score = gpa * 0.6 + e * 0.3 + m * 0.1
     elif university_key == "AUK":
-        if is_stem_path(college_name, interest):
-            score = gpa * 0.6 + e * 0.25 + m * 0.15
-        else:
-            score = gpa * 0.7 + e * 0.3
+        score = gpa * 0.6 + e * 0.25 + m * 0.15
     else:
         score = gpa * 0.7 + e * 0.2 + m * 0.1
-    return round(score, 2)
+    return round(score,2)
 
-# ========================== MAIN PROCESSING =============================
+# ------------------ MAIN PROCESSING ------------------
 if st.button("اقترح التخصصات"):
     if university == "جامعة الكويت":
-        uni_colleges = colleges
+        uni_colleges = ku_colleges
         uni_key = "KU"
     elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
         uni_colleges = aum_colleges
@@ -499,7 +480,6 @@ if st.button("اقترح التخصصات"):
         if interest not in data.get("interests", []):
             continue
 
-        final_score = 0.0
         if uni_key == "KU":
             final_score = compute_ku_score(data.get("weights", {}), gpa, english, math, arabic, french)
         elif uni_key == "AUM":
@@ -508,11 +488,12 @@ if st.button("اقترح التخصصات"):
             final_score = compute_other_uni_score("GUST", name, interest, gpa, gust_english, gust_math)
         elif uni_key == "AUK":
             final_score = compute_other_uni_score("AUK", name, interest, gpa, auk_english, auk_math)
+        else:
+            final_score = 0
 
-        if final_score >= data.get("min_score", 0):
+        if final_score >= data.get("min_score",0):
             matched.append((name, data, final_score))
 
-    # ------------------ DISPLAY RESULTS ------------------
     if matched:
         st.success(f"هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
@@ -521,30 +502,30 @@ if st.button("اقترح التخصصات"):
                 paths_html = "<p><strong>المسارات:</strong></p><ul>"
                 for p in data["paths"]:
                     if isinstance(p, dict):
-                        cls = "path-good" if final_score >= p.get("min_score", 0) else "path-bad"
+                        cls = "path-good" if final_score >= p.get("min_score",0) else "path-bad"
                         paths_html += f"<li class='{cls}'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
                         paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
 
             icon = "🎓"
-            if any(k in name for k in ["الهندسة", "Engineering", "Computer"]):
+            if any(k in name for k in ["الهندسة","Engineering","Computer"]):
                 icon = "⚙️"
-            elif any(k in name for k in ["طب", "الصيدلة", "الصحي"]):
+            elif any(k in name for k in ["طب","الصيدلة","الصحي"]):
                 icon = "🏥"
-            elif any(k in name for k in ["الآداب", "الفنون", "Design"]):
+            elif any(k in name for k in ["الآداب","الفنون","Design"]):
                 icon = "🎨"
-            elif any(k in name for k in ["القانون", "الشريعة", "حقوق"]):
+            elif any(k in name for k in ["القانون","الشريعة","حقوق"]):
                 icon = "📚"
 
             st.markdown(f"""
-            <div class='college-card'>
-                <div style='font-size:28px'>{icon}</div>
-                <h3 class='college-title'>{name}</h3>
-                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong>سنوات الدراسة:</strong> {data.get('years', '?')} سنوات</p>
-                {paths_html}
-            </div>
+                <div class='college-card'>
+                    <div style='font-size:28px'>{icon}</div>
+                    <h3 class='college-title'>{name}</h3>
+                    <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                    <p><strong>سنوات الدراسة:</strong> {data.get('years','?')} سنوات</p>
+                    {paths_html}
+                </div>
             """, unsafe_allow_html=True)
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
