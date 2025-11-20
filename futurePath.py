@@ -439,31 +439,31 @@ if st.button(" اقترح التخصصات"):
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
-    # Display results
-    if matched:
-        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
-        for name, data, final_score in matched:
-            paths_html = ""
-            if "paths" in data and data["paths"]:
-                paths_html = "<p><strong> المسارات:</strong></p><ul>"
-                for p in data["paths"]:
-                    if isinstance(p, dict):
-                        if final_score >= p.get("min_score", 0):
-                            paths_html += f"<li style='color:green;font-weight:bold;'>✔ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-                        else:
-                            paths_html += f"<li style='color:red;'>✘ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-                    else:
-                        paths_html += f"<li>{p}</li>"
-                paths_html += "</ul>"
 
-            st.markdown(f"""
-            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                {paths_html}
-            </div>
-            """, unsafe_allow_html=True)
+# Display results
+if matched:
+    st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+    for name, data, final_score in matched:
+        paths_html = ""
+        if "paths" in data and data["paths"]:
+            paths_html = "<p><strong> المسارات:</strong></p><ul>"
+            for p in data["paths"]:
+                if isinstance(p, dict):
+                    # Only color the text green if achievable, red if not
+                    color = "green" if final_score >= p.get("min_score", 0) else "red"
+                    paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                else:
+                    paths_html += f"<li>{p}</li>"
+            paths_html += "</ul>"
 
-    else:
-        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+        st.markdown(f"""
+        <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+            <h3 style='margin-bottom: 10px;'>{name}</h3>
+            <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+            <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            {paths_html}
+        </div>
+        """, unsafe_allow_html=True)
+else:
+    st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+
