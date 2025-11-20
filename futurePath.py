@@ -53,7 +53,6 @@ arabic = st.number_input(" درجة القدرات – عربي ٪  (إذا كا
 french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
 
 # ------------------ UNIVERSITY-SPECIFIC PLACEMENT TEST INPUTS ------------------
-# We show only the inputs relevant to the selected university to reduce clutter
 if university == "جامعة الشرق الأوسط الأمريكية (AUM)":
     st.subheader("درجات اختبارات القبول — AUM")
     aum_english = st.number_input("AUM — English placement (٪)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
@@ -94,6 +93,7 @@ interest = st.selectbox(" شنو نوع التخصصات اللي تميل له�
 st.subheader("اختر المسار الثانوي")
 stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
 
+# ========================== UNIVERSITY DATA =============================
 # ------------------ KU COLLEGES (unchanged data) ------------------
 colleges = OrderedDict({
     "كلية الطب": {
@@ -363,10 +363,7 @@ colleges = OrderedDict({
        ]
     }
 })
-
-
-
-# --- الجامعة الأمريكية في الشرق الأوسط (AUM) ---
+# --- AUM colleges ---
 aum_colleges = {
     "College of Engineering and Technology": {
         "weights": {"gpa": 80, "english": 20},
@@ -391,7 +388,7 @@ aum_colleges = {
     }
 }
 
-# --- الجامعة الأمريكية في الكويت (AUK) ---
+# --- AUK colleges ---
 auk_colleges = {
     "College of Arts and Sciences": {
         "weights": {"gpa": 85, "english": 15},
@@ -416,7 +413,7 @@ auk_colleges = {
     }
 }
 
-# --- الجامعة الخليجية للعلوم والتكنولوجيا (GUST) ---
+# --- GUST colleges ---
 gust_colleges = {
     "College of Business Administration": {
         "weights": {"gpa": 85, "english": 15},
@@ -434,89 +431,48 @@ gust_colleges = {
     }
 }
 
-# ========================== UTILITY FUNCTIONS =============================
-
 def is_stem_path(college_name, interest, path_name=None):
-    """Heuristic to decide whether the college/path is STEM-related."""
     stem_keywords = ["الهندسة", "Engineering", "علوم", "Computer", "Electrical", "Mechanical"]
     if any(k in college_name for k in stem_keywords):
         return True
     if "الهندسة" in interest or "العلوم" in interest or "التحليل" in interest:
         return True
-    if path_name:
-        if any(k in path_name for k in stem_keywords):
-            return True
+    if path_name and any(k in path_name for k in stem_keywords):
+        return True
     return False
 
-
 def compute_ku_score(weights, gpa, english, math, arabic, french):
-    """Compute score for Kuwait University using the college's weights structure."""
     score = 0.0
-    # weights could be a simple dict (gpa, english, math...) or nested (for كلية الآداب)
-    if isinstance(weights, dict) and any(k in weights for k in ["gpa", "english", "math", "arabic", "french"]):
-        if "gpa" in weights:
-            score += gpa * (weights.get("gpa", 0) / 100)
-        if "math" in weights:
-            score += math * (weights.get("math", 0) / 100)
-        if "english" in weights:
-            score += english * (weights.get("english", 0) / 100)
-        if "arabic" in weights:
-            score += arabic * (weights.get("arabic", 0) / 100)
-        if "french" in weights:
-            score += french * (weights.get("french", 0) / 100)
-    else:
-        # fallback: equal weighting by available inputs
-        available = []
-        if gpa is not None: available.append(gpa)
-        if english is not None: available.append(english)
-        if math is not None: available.append(math)
-        if arabic is not None: available.append(arabic)
-        if french is not None: available.append(french)
-        if available:
-            score = sum(available) / len(available)
+    if isinstance(weights, dict):
+        score += gpa * (weights.get("gpa", 0) / 100)
+        score += math * (weights.get("math", 0) / 100)
+        score += english * (weights.get("english", 0) / 100)
+        score += arabic * (weights.get("arabic", 0) / 100)
+        score += french * (weights.get("french", 0) / 100)
     return round(score, 2)
-
 
 def compute_other_uni_score(university_key, college_name, interest, gpa, english_score, math_score):
-    """Compute score for AUM, GUST, AUK using the realistic formulas specified earlier."""
-    # Default fallback: simple weighted sum using gpa and english
-    score = 0.0
+    e = english_score or english
+    m = math_score or math
     if university_key == "AUM":
-        # AUM: 60% GPA, 25% English, 15% Math
-        e = english_score if english_score is not None else english
-        m = math_score if math_score is not None else math
-        score = gpa * 0.6 + (e or 0) * 0.25 + (m or 0) * 0.15
+        score = gpa * 0.6 + e * 0.25 + m * 0.15
     elif university_key == "GUST":
-        # GUST: 60% GPA + 40% English (non-STEM)
-        # For STEM paths include math: 60% GPA +30% English +10% Math
         if is_stem_path(college_name, interest):
-            e = english_score if english_score is not None else english
-            m = math_score if math_score is not None else math
-            score = gpa * 0.6 + (e or 0) * 0.3 + (m or 0) * 0.1
+            score = gpa * 0.6 + e * 0.3 + m * 0.1
         else:
-            e = english_score if english_score is not None else english
-            score = gpa * 0.6 + (e or 0) * 0.4
+            score = gpa * 0.6 + e * 0.4
     elif university_key == "AUK":
-        # AUK: humanities: 70% GPA + 30% English
-        # science/engineering: 60% GPA + 25% English + 15% Math
         if is_stem_path(college_name, interest):
-            e = english_score if english_score is not None else english
-            m = math_score if math_score is not None else math
-            score = gpa * 0.6 + (e or 0) * 0.25 + (m or 0) * 0.15
+            score = gpa * 0.6 + e * 0.25 + m * 0.15
         else:
-            e = english_score if english_score is not None else english
-            score = gpa * 0.7 + (e or 0) * 0.3
+            score = gpa * 0.7 + e * 0.3
     else:
-        # fallback
-        e = english_score if english_score is not None else english
-        m = math_score if math_score is not None else math
-        score = gpa * 0.7 + (e or 0) * 0.2 + (m or 0) * 0.1
-
+        score = gpa * 0.7 + e * 0.2 + m * 0.1
     return round(score, 2)
 
-# ========================== MAIN RESULTS =============================
-if st.button(" اقترح التخصصات"):
-    # Select correct university dataset
+# ========================== MAIN PROCESSING =============================
+if st.button("اقترح التخصصات"):
+    # Select university dataset
     if university == "جامعة الكويت":
         uni_colleges = colleges
         uni_key = "KU"
@@ -534,54 +490,41 @@ if st.button(" اقترح التخصصات"):
         uni_key = None
 
     matched = []
-
     for name, data in uni_colleges.items():
-        # Stream check
-        if "stream" in data and data["stream"] != stream:
+        if data.get("stream") and data["stream"] != stream:
             continue
-        # interest check
         if interest not in data.get("interests", []):
             continue
 
         final_score = 0.0
-        # Compute final score depending on university
         if uni_key == "KU":
-            weights = data.get("weights", {})
-            final_score = compute_ku_score(weights, gpa, english, math, arabic, french)
+            final_score = compute_ku_score(data.get("weights", {}), gpa, english, math, arabic, french)
         elif uni_key == "AUM":
-            # take AUM placement inputs
             final_score = compute_other_uni_score("AUM", name, interest, gpa, aum_english, aum_math)
         elif uni_key == "GUST":
             final_score = compute_other_uni_score("GUST", name, interest, gpa, gust_english, gust_math)
         elif uni_key == "AUK":
             final_score = compute_other_uni_score("AUK", name, interest, gpa, auk_english, auk_math)
-        else:
-            final_score = compute_ku_score(data.get("weights", {}), gpa, english, math, arabic, french)
 
-        # store if meets college min_score
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
-    # Display results
+    # ------------------ DISPLAY RESULTS ------------------
     if matched:
-        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        st.success(f"هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
             paths_html = ""
-            if "paths" in data and data["paths"]:
-                paths_html = "<p><strong> المسارات:</strong></p><ul>"
+            if "paths" in data:
+                paths_html = "<p><strong>المسارات:</strong></p><ul>"
                 for p in data["paths"]:
                     if isinstance(p, dict):
-                        # show green or red text only (no check/x)
-                        if final_score >= p.get("min_score", 0):
-                            paths_html += f"<li class='path-good'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-                        else:
-                            paths_html += f"<li class='path-bad'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                        cls = "path-good" if final_score >= p.get("min_score", 0) else "path-bad"
+                        paths_html += f"<li class='{cls}'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
-                        # if path is a plain string, we don't have a path-specific min — just show it
                         paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
 
-            # Add a small emoji icon depending on interest for visual identity
+            # Emoji icon for visual
             icon = "🎓"
             if any(k in name for k in ["الهندسة", "Engineering", "Computer"]):
                 icon = "⚙️"
@@ -596,8 +539,8 @@ if st.button(" اقترح التخصصات"):
             <div class='college-card'>
                 <div style='font-size:28px'>{icon}</div>
                 <h3 class='college-title'>{name}</h3>
-                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong> سنوات الدراسة:</strong> {data.get('years', '?')} سنوات</p>
+                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong>سنوات الدراسة:</strong> {data.get('years', '?')} سنوات</p>
                 {paths_html}
             </div>
             """, unsafe_allow_html=True)
