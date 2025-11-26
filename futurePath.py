@@ -29,6 +29,7 @@ st.markdown("""
 # ------------------ UI TITLE ------------------
 st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
+
 # University selection
 university = st.selectbox("اختر الجامعة", 
                           ["جامعة الكويت", 
@@ -37,40 +38,38 @@ university = st.selectbox("اختر الجامعة",
                            "جامعة الشرق الأوسط الأمريكية (AUM)"]
                          )
 st.subheader("أدخل درجاتك")
-
 # GPA always required
 gpa = st.number_input("النسبة في الثانوية", min_value=0.0, max_value=100.0, step=0.1)
 
+# -------------------------------- KU --------------------------------
 if university == "جامعة الكويت":
     st.write("### اختبارات القبول المطلوبة لجامعة الكويت:")
-    english = st.number_input(" درجة اختبار اللغة الإنجليزية", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    math = st.number_input(" درجة اختبار الرياضيات", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    arabic = st.number_input(" درجة اختبار اللغة العربية", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    french = st.number_input(" درجة اختبار الفرنسية (اختياري)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
-    
-    # ------------------ STREAM SELECTOR ------------------
-    stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
+    english = st.number_input("اختبار قدرات اللغه الانجليزي", min_value=0.0, max_value=100.0, step=0.1)
+    math = st.number_input("اختبار قدرات الرياضيات", min_value=0.0, max_value=100.0, step=0.1)
+    arabic = st.number_input("اختبار قدرات اللغه العربي (اختياري)", min_value=0.0, max_value=100.0, step=0.1)
+    french = st.number_input("اختبار قدرات الفرنسية (اختياري) ", min_value=0.0, max_value=100.0, step=0.1)
 
+# -------------------------------- AUM --------------------------------
 elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
     st.write("### اختبارات القبول المطلوبة لـ AUM:")
-    english = st.number_input(" English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.01)
-    math = st.number_input(" Math Placement Test (MPT)", min_value=0.0, max_value=100.0, step=0.01)
-    stream = None
+    english = st.number_input("English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.1)
+    math = st.number_input("Math Placement Test (MPT)", min_value=0.0, max_value=100.0, step=0.1)
 
-elif university == "الجامعة الأمريكية في الكويت (AUK)":
-    st.write("### اختبارات القبول المطلوبة لـ AUK:")
-    english = st.number_input(" TOEFL / IELTS", min_value=0.0, max_value=120.0, step=0.01)
-    reading = st.number_input(" ACCUPLACER Reading", min_value=0.0, max_value=120.0, step=0.01)
-    math = st.number_input(" ACCUPLACER Math (حسب التخصص)", min_value=0.0, max_value=120.0, step=0.01)
-    stream = None
-
+# -------------------------------- GUST --------------------------------
 elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
     st.write("### اختبارات القبول المطلوبة لـ GUST:")
-    english = st.number_input(" English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.01)
-    math = st.number_input(" اختبار تحديد مستوى الرياضيات (إن وجد)", min_value=0.0, max_value=100.0, step=0.01)
-    stream = None
+    english = st.number_input("English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.1)
+    math = st.number_input("اختبار تحديد مستوى الرياضيات (إن وجد)", min_value=0.0, max_value=100.0, step=0.1)
 
-## ------------------ INTEREST SELECTOR ------------------
+# -------------------------------- AUK --------------------------------
+elif university == "الجامعة الأمريكية في الكويت (AUK)":
+    st.write("### اختبارات القبول المطلوبة لـ AUK:")
+    english = st.number_input("TOEFL / IELTS", min_value=0.0, max_value=120.0, step=0.1)
+    reading = st.number_input("ACCUPLACER Reading", min_value=0.0, max_value=120.0, step=0.1)
+    math = st.number_input("ACCUPLACER Math (حسب التخصص)", min_value=0.0, max_value=120.0, step=0.1)
+
+
+# ------------------ INTEREST SELECTOR ------------------
 st.subheader("اختيار مجال اهتمامك")
 interest = st.selectbox(" شنو نوع التخصصات اللي تميل لها أكثر؟", [
     "المجال الطبي والصحي 🏥",
@@ -429,6 +428,7 @@ gust_colleges = {
 # ========================== MAIN RESULTS =============================
  # ========================== MAIN RESULTS =============================
 if st.button(" اقترح التخصصات"):
+    # Select correct university
     if university == "جامعة الكويت":
         uni_colleges = colleges
     elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
@@ -443,8 +443,8 @@ if st.button(" اقترح التخصصات"):
     matched = []
 
     for name, data in uni_colleges.items():
-        # Only KU uses stream
-        if university == "جامعة الكويت" and "stream" in data and data["stream"] != stream:
+        # Stream check
+        if "stream" in data and data["stream"] != stream:
             continue
         if interest not in data.get("interests", []):
             continue
@@ -454,14 +454,15 @@ if st.button(" اقترح التخصصات"):
         if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
         if "math" in weights: score += math * (weights.get("math", 0) / 100)
         if "english" in weights: score += english * (weights.get("english", 0) / 100)
-        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100) if 'arabic' in locals() else 0
-        if "french" in weights: score += french * (weights.get("french", 0) / 100) if 'french' in locals() else 0
+        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
+        if "french" in weights: score += french * (weights.get("french", 0) / 100)
 
         final_score = round(score, 2)
 
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
+    # --- DISPLAY RESULTS ---
     if matched:
         st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
