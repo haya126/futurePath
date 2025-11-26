@@ -483,6 +483,7 @@ if st.button(" اقترح التخصصات"):
                 <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
                 {paths_html}
             </div>
-            """, unsafe_allow_html=True)else:
+            """, unsafe_allow_html=True)
+    else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
 
