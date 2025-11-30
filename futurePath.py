@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+for this code I need for each category for the in the card for each college for each category a color for it in the side as it here blue but try to make for each have a unique color # -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
 
@@ -96,7 +96,7 @@ colleges = OrderedDict({
       "min_score": 95.68,
       "interests": ["المجال الطبي والصحي 🏥"],
       "years": 7
-n    },
+    },
 
     "كلية طب الأسنان": {
       "stream": "علمي",
@@ -487,4 +487,3 @@ if st.button(" اقترح التخصصات"):
             """, unsafe_allow_html=True)
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
-
