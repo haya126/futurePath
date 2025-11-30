@@ -465,17 +465,15 @@ if st.button(" اقترح التخصصات"):
     # --- DISPLAY RESULTS ---
    if matched:
 st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
-
-```
 # Define unique colors for each interest/category
 category_colors = {
-    "المجال الطبي والصحي 🏥": "#FF6B6B",  # red/pink
-    "الهندسة والتقنية ⚙️": "#1E90FF",     # blue
-    "التحليل والرياضيات 📊": "#FFA500",    # orange
-    "القانون والقراءة 📚": "#32CD32",      # green
-    "الفنون والتصميم 🎨": "#8A2BE2",      # purple
-    "العلوم الطبيعية 🧪": "#20B2AA",      # teal
-    "التربية والتعليم 👩‍🏫": "#FFD700"     # gold/yellow
+    "المجال الطبي والصحي 🏥": "#FF6B6B",
+    "الهندسة والتقنية ⚙️": "#1E90FF",
+    "التحليل والرياضيات 📊": "#FFA500",
+    "القانون والقراءة 📚": "#32CD32",
+    "الفنون والتصميم 🎨": "#8A2BE2",
+    "العلوم الطبيعية 🧪": "#20B2AA",
+    "التربية والتعليم 👩‍🏫": "#FFD700"
 }
 
 for name, data, final_score in matched:
@@ -494,15 +492,14 @@ for name, data, final_score in matched:
     main_interest = data.get("interests", [interest])[0]
     card_color = category_colors.get(main_interest, "#003366")
 
-    st.markdown(f"""
-    <div style='border-right: 6px solid {card_color}; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-        <h3 style='margin-bottom: 10px;'>{name}</h3>
-        <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-        <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-        {paths_html}
-    </div>
-    """, unsafe_allow_html=True)
-```
-
-    else:
-        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+    st.markdown(
+        f"""
+        <div style='border-right: 6px solid {card_color}; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+            <h3 style='margin-bottom: 10px;'>{name}</h3>
+            <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+            <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            {paths_html}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
