@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
 
@@ -463,46 +463,27 @@ if st.button(" اقترح التخصصات"):
             matched.append((name, data, final_score))
 
     # --- DISPLAY RESULTS ---
-   if matched:
-st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+    if matched:
+        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        for name, data, final_score in matched:
+            paths_html = ""
+            if "paths" in data and data["paths"]:
+                paths_html = "<p><strong> المسارات:</strong></p><ul>"
+                for p in data["paths"]:
+                    if isinstance(p, dict):
+                        color = "green" if final_score >= p.get("min_score", 0) else "red"
+                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                    else:
+                        paths_html += f"<li>{p}</li>"
+                paths_html += "</ul>"
 
-```
-# Define unique colors for each interest/category
-category_colors = {
-    "المجال الطبي والصحي 🏥": "#FF6B6B",
-    "الهندسة والتقنية ⚙️": "#1E90FF",
-    "التحليل والرياضيات 📊": "#FFA500",
-    "القانون والقراءة 📚": "#32CD32",
-    "الفنون والتصميم 🎨": "#8A2BE2",
-    "العلوم الطبيعية 🧪": "#20B2AA",
-    "التربية والتعليم 👩‍🏫": "#FFD700"
-}
-
-for name, data, final_score in matched:
-    paths_html = ""
-    if "paths" in data and data["paths"]:
-        paths_html = "<p><strong> المسارات:</strong></p><ul>"
-        for p in data["paths"]:
-            if isinstance(p, dict):
-                color = "green" if final_score >= p.get("min_score", 0) else "red"
-                paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-            else:
-                paths_html += f"<li>{p}</li>"
-        paths_html += "</ul>"
-
-    # Get the color for the card based on the main interest/category
-    main_interest = data.get("interests", [interest])[0]
-    card_color = category_colors.get(main_interest, "#003366")
-
-    st.markdown(
-        f"""
-        <div style='border-right: 6px solid {card_color}; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-            <h3 style='margin-bottom: 10px;'>{name}</h3>
-            <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-            <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-            {paths_html}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-```
+            st.markdown(f"""
+            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+                <h3 style='margin-bottom: 10px;'>{name}</h3>
+                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+                {paths_html}
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
