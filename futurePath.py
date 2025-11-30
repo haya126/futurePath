@@ -465,6 +465,8 @@ if st.button(" اقترح التخصصات"):
     # --- DISPLAY RESULTS ---
    if matched:
 st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+
+```
 # Define unique colors for each interest/category
 category_colors = {
     "المجال الطبي والصحي 🏥": "#FF6B6B",
@@ -503,3 +505,4 @@ for name, data, final_score in matched:
         """,
         unsafe_allow_html=True
     )
+```
