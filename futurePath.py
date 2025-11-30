@@ -1,31 +1,32 @@
 # -*- coding: utf-8 -*-
-
 from collections import OrderedDict
 import streamlit as st
 
 # ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
-
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;} </style>
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
 """, unsafe_allow_html=True)
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
-st.markdown(""" <style>
-@import url('[https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap)');
-body { direction: rtl; text-align: right; background-color: #F9F7F1; }
-* { font-family: 'Tajawal', sans-serif !important; }
-.main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
-h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
-label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
-.stTextInput > div > div > input,
-.stNumberInput > div > div > input { text-align: right; font-size: 15px; }
-.stNumberInput { margin-bottom: 20px; } </style>
+st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        body { direction: rtl; text-align: right; background-color: #F9F7F1; }
+        * { font-family: 'Tajawal', sans-serif !important; }
+        .main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
+        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
+        label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
+        .stNumberInput { margin-bottom: 20px; }
+    </style>
 """, unsafe_allow_html=True)
 
 # ------------------ UI TITLE ------------------
-
 st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
 
@@ -94,7 +95,7 @@ colleges = OrderedDict({
       "weights": {"gpa": 75, "english": 15, "math": 10},
       "min_score": 95.68,
       "interests": ["المجال الطبي والصحي 🏥"],
-      "years": 7,
+      "years": 7
 n    },
 
     "كلية طب الأسنان": {
@@ -102,14 +103,14 @@ n    },
       "weights": {"gpa": 75, "english": 15, "math": 10},
       "min_score": 95.09,
       "interests": ["المجال الطبي والصحي 🏥"],
-      "years": 6,
+      "years": 6
     },
     "كلية الصيدلة": {
       "stream": "علمي",
       "weights": {"gpa": 70, "english": 15, "math": 15},
       "min_score": 93,
       "interests": ["المجال الطبي والصحي 🏥"],
-      "years": 6,
+      "years": 6
     },
 
     "كلية العلوم الطبية المساعدة": {
@@ -133,7 +134,7 @@ n    },
       "weights": {"gpa": 70, "english": 15, "math": 15},
       "min_score": 83.82,
       "interests": ["المجال الطبي والصحي 🏥"],
-      "years": 4,
+      "years": 4
 },
 
    "كلية العمارة": {
@@ -283,7 +284,7 @@ n    },
       "weights": {"gpa": 100},
       "min_score": 85.14,
       "interests": ["القانون والقراءة 📚"],
-      "years": 4,
+      "years": 4
     },
 
     "كلية الشريعة": {
@@ -425,66 +426,65 @@ gust_colleges = {
     }
 }
 # ========================== MAIN RESULTS =============================
-
+ # ========================== MAIN RESULTS =============================
 if st.button(" اقترح التخصصات"):
-if university == "جامعة الكويت":
-uni_colleges = colleges
-elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
-uni_colleges = aum_colleges
-elif university == "الجامعة الأمريكية في الكويت (AUK)":
-uni_colleges = auk_colleges
-elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
-uni_colleges = gust_colleges
-else:
-uni_colleges = {}
+    # Select correct university
+    if university == "جامعة الكويت":
+        uni_colleges = colleges
+    elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
+        uni_colleges = aum_colleges
+    elif university == "الجامعة الأمريكية في الكويت (AUK)":
+        uni_colleges = auk_colleges
+    elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
+        uni_colleges = gust_colleges
+    else:
+        uni_colleges = {}
 
-```
-matched = []
+    matched = []
 
-for name, data in uni_colleges.items():
-    if "stream" in data and data["stream"] != stream:
-        continue
-    if interest not in data.get("interests", []):
-        continue
+    for name, data in uni_colleges.items():
+        # Stream check
+        if "stream" in data and data["stream"] != stream:
+            continue
+        if interest not in data.get("interests", []):
+            continue
 
-    weights = data.get("weights", {})
-    score = 0
-    if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
-    if "math" in weights: score += math * (weights.get("math", 0) / 100)
-    if "english" in weights: score += english * (weights.get("english", 0) / 100)
-    if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
-    if "french" in weights: score += french * (weights.get("french", 0) / 100)
+        weights = data.get("weights", {})
+        score = 0
+        if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
+        if "math" in weights: score += math * (weights.get("math", 0) / 100)
+        if "english" in weights: score += english * (weights.get("english", 0) / 100)
+        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
+        if "french" in weights: score += french * (weights.get("french", 0) / 100)
 
-    final_score = round(score, 2)
+        final_score = round(score, 2)
 
-    if final_score >= data.get("min_score", 0):
-        matched.append((name, data, final_score))
+        if final_score >= data.get("min_score", 0):
+            matched.append((name, data, final_score))
 
-if matched:
-    st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
-    for name, data, final_score in matched:
-        # Use unique category color
-        card_color = category_colors.get(interest, "#003366")
-        
-        paths_html = ""
-        if "paths" in data and data["paths"]:
-            paths_html = "<p><strong> المسارات:</strong></p><ul>"
-            for p in data["paths"]:
-                if isinstance(p, dict):
-                    color = "green" if final_score >= p.get("min_score", 0) else "red"
-                    paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-                else:
-                    paths_html += f"<li>{p}</li>"
-            paths_html += "</ul>"
+    # --- DISPLAY RESULTS ---
+    if matched:
+        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        for name, data, final_score in matched:
+            paths_html = ""
+            if "paths" in data and data["paths"]:
+                paths_html = "<p><strong> المسارات:</strong></p><ul>"
+                for p in data["paths"]:
+                    if isinstance(p, dict):
+                        color = "green" if final_score >= p.get("min_score", 0) else "red"
+                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                    else:
+                        paths_html += f"<li>{p}</li>"
+                paths_html += "</ul>"
 
-        st.markdown(f"""
-        <div style='border-right: 6px solid {card_color}; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-            <h3 style='margin-bottom: 10px;'>{name}</h3>
-            <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-            <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
-            {paths_html}
-        </div>
-        """, unsafe_allow_html=True)
-else:
-    st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
-```
+            st.markdown(f"""
+            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+                <h3 style='margin-bottom: 10px;'>{name}</h3>
+                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+                {paths_html}
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+
