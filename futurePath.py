@@ -1,4 +1,4 @@
-for this code I need for each category for the in the card for each college for each category a color for it in the side as it here blue but try to make for each have a unique color # -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
 
