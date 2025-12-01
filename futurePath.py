@@ -506,5 +506,5 @@ if st.button(" اقترح التخصصات"):
             </div>
             """, unsafe_allow_html=True)
 
- else:
-     st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+    else:
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
