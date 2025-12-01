@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+for this code I need for each category for the in the card for each college for each category a color for it in the side as it here blue but try to make for each have a unique color # -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
 
@@ -71,15 +71,15 @@ elif university == "الجامعة الأمريكية في الكويت (AUK)":
 
 # ------------------ INTEREST SELECTOR ------------------
 st.subheader("اختيار مجال اهتمامك")
-interest_colors={
-"المجال الطبي والصحي 🏥":"#653A36",
-"الهندسة والتقنية ⚙️":"#D16A54",
-"التحليل والرياضيات 📊":"#EAAD62",
-"القانون والقراءة 📚":"#E8D4A5",
-"الفنون والتصميم 🎨":"#CFBF72",
-"العلوم الطبيعية 🧪":"#7A7D55",
-"التربية والتعليم 👩‍🏫":"#314A4A"
-}
+interest = st.selectbox(" شنو نوع التخصصات اللي تميل لها أكثر؟", [
+    "المجال الطبي والصحي 🏥",
+    "الهندسة والتقنية ⚙️",
+    "التحليل والرياضيات 📊",
+    "القانون والقراءة 📚",
+    "الفنون والتصميم 🎨",
+    "العلوم الطبيعية 🧪",
+    "التربية والتعليم 👩‍🏫"
+])
 
 # ------------------ STREAM SELECTOR ------------------
 st.subheader("اختر المسار الثانوي")
@@ -470,13 +470,13 @@ if st.button(" اقترح التخصصات"):
             if "paths" in data and data["paths"]:
                 paths_html = "<p><strong> المسارات:</strong></p><ul>"
                 for p in data["paths"]:
-                    if isinstance(path, dict):
+                    if isinstance(p, dict):
                         color = "green" if final_score >= p.get("min_score", 0) else "red"
-                        paths_html +=f"{path['name']}(الحد الأدنى: {p['min_score']}%)"
+                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
-                        paths_html += f"{path}"
-                paths_html += ""
-                main_color= interest_colors.get(interest,"#003366")
+                        paths_html += f"<li>{p}</li>"
+                paths_html += "</ul>"
+
             st.markdown(f"""
             <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
