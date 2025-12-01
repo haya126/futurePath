@@ -477,13 +477,17 @@ if st.button(" اقترح التخصصات"):
                         paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
 
+            main_color = interest_colors.get(interest, "#4F7678")
             st.markdown(f"""
-            <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            <div style='border-left: 6px solid {main_color}; padding: 20px 25px; margin: 20px 0; 
+                        background: linear-gradient(135deg, #f9f9f9, #e6f0f0); 
+                        border-radius: 15px; 
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                <h3 style='margin-bottom: 12px; color:{main_color};'>{name}</h3>
+                <p style='margin-bottom: 8px;'><strong> معدلك المكافئ:</strong> {final_score}%</p>
+                <p style='margin-bottom: 8px;'><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
                 {paths_html}
             </div>
             """, unsafe_allow_html=True)
-    else:
-        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+        else:
+            st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
