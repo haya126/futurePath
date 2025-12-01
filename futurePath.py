@@ -70,7 +70,6 @@ elif university == "الجامعة الأمريكية في الكويت (AUK)":
 
 
 # ------------------ INTEREST SELECTOR ------------------
-interest = st.selectbox("اختر اهتمامك", list(interest_colors.keys()))
 interest_colors = {
     "المجال الطبي والصحي 🏥": "#653A36",
     "الهندسة والتقنية ⚙️": "#D16A54",
@@ -81,6 +80,11 @@ interest_colors = {
     "التربية والتعليم 👩‍🏫": "#314A4A"
     }
 
+if interest_colors:
+    interest = st.selectbox("اختر اهتمامك", list(interest_colors.keys()))
+else:
+    st.error("No interests defined!")
+    st.stop()
 # ------------------ STREAM SELECTOR ------------------
 st.subheader("اختر المسار الثانوي")
 stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
@@ -427,7 +431,13 @@ gust_colleges = {
 }
 # ========================== MAIN RESULTS =============================
  # ========================== MAIN RESULTS =============================
+# ========================== MAIN RESULTS =============================
 if st.button(" اقترح التخصصات"):
+    # defaults for optional inputs
+    arabic = arabic if 'arabic' in locals() else 0
+    french = french if 'french' in locals() else 0
+    math = math if 'math' in locals() else 0
+
     # Select correct university
     if university == "جامعة الكويت":
         uni_colleges = colleges
@@ -464,30 +474,40 @@ if st.button(" اقترح التخصصات"):
 
     # --- DISPLAY RESULTS ---
     if matched:
-        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        st.success(f"هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        
         for name, data, final_score in matched:
             paths_html = ""
             if "paths" in data and data["paths"]:
-                paths_html = "<p><strong> المسارات:</strong></p><ul>"
-                for p in data["paths"]:
-                    if isinstance(p, dict):
-                        color = "green" if final_score >= p.get("min_score", 0) else "red"
-                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                paths_html = "<p><strong>المسارات:</strong></p><ul>"
+                for path in data["paths"]:
+                    if isinstance(path, dict):
+                        color = "green" if final_score >= path.get("min_score", 0) else "red"
+                        paths_html += f"<li style='color:{color};'>{path['name']} (الحد الأدنى: {path['min_score']}%)</li>"
                     else:
-                        paths_html += f"<li>{p}</li>"
+                        paths_html += f"<li>{path}</li>"
                 paths_html += "</ul>"
 
             main_color = interest_colors.get(interest, "#4F7678")
+
             st.markdown(f"""
-            <div style='border-left: 6px solid {main_color}; padding: 20px 25px; margin: 20px 0; 
-                        background: linear-gradient(135deg, #f9f9f9, #e6f0f0); 
-                        border-radius: 15px; 
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
-                <h3 style='margin-bottom: 12px; color:{main_color};'>{name}</h3>
-                <p style='margin-bottom: 8px;'><strong> معدلك المكافئ:</strong> {final_score}%</p>
-                <p style='margin-bottom: 8px;'><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            <div style="
+                border-right: 6px solid {main_color};
+                padding: 20px 25px;
+                margin: 20px 0;
+                background-color: #f9f9f9;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            ">
+                <h3 style='margin-bottom: 10px;'>{name}</h3>
+                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
                 {paths_html}
             </div>
             """, unsafe_allow_html=True)
+    else:
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+
+
         else:
             st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
