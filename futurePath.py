@@ -442,24 +442,30 @@ if st.button(" اقترح التخصصات"):
 
     matched = []
 
+    for name, data in uni_colleges.items():
+    # Stream restriction: only block literary students from scientific-only colleges
     if "stream" in data:
         if stream == "أدبي" and data["stream"] == "علمي":
-           # Literary students cannot enter scientific-only colleges
-           continue
-        # Scientific students can enter both, so no need to block
+            continue  # Literary students cannot enter scientific-only colleges
+    
+    # Interest check
+    if interest not in data.get("interests", []):
+        continue
 
-        weights = data.get("weights", {})
-        score = 0
-        if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
-        if "math" in weights: score += math * (weights.get("math", 0) / 100)
-        if "english" in weights: score += english * (weights.get("english", 0) / 100)
-        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
-        if "french" in weights: score += french * (weights.get("french", 0) / 100)
+    # Calculate score
+    weights = data.get("weights", {})
+    score = 0
+    if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
+    if "math" in weights: score += math * (weights.get("math", 0) / 100)
+    if "english" in weights: score += english * (weights.get("english", 0) / 100)
+    if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
+    if "french" in weights: score += french * (weights.get("french", 0) / 100)
 
-        final_score = round(score, 2)
+    final_score = round(score, 2)
 
-        if final_score >= data.get("min_score", 0):
-            matched.append((name, data, final_score))
+    if final_score >= data.get("min_score", 0):
+        matched.append((name, data, final_score))
+
 
     # --- DISPLAY RESULTS ---
     if matched:
