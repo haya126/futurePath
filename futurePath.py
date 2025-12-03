@@ -442,12 +442,11 @@ if st.button(" اقترح التخصصات"):
 
     matched = []
 
-    for name, data in uni_colleges.items():
-        # Stream check
-        if "stream" in data and data["stream"] != stream:
-            continue
-        if interest not in data.get("interests", []):
-            continue
+    if "stream" in data:
+        if stream == "أدبي" and data["stream"] == "علمي":
+           # Literary students cannot enter scientific-only colleges
+           continue
+        # Scientific students can enter both, so no need to block
 
         weights = data.get("weights", {})
         score = 0
