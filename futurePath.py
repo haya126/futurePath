@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+here is the code dont change just do what I told you to do # -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
 
@@ -14,77 +14,54 @@ st.markdown("""
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
-
-st.set_page_config(page_title="منصه تخصصي", layout="centered")
-st.markdown("""
-    <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
         body { direction: rtl; text-align: right; background-color: #F9F7F1; }
         * { font-family: 'Tajawal', sans-serif !important; }
-
-        /* FIX: Move everything to the RIGHT side */
-        .main > div:first-child > div > div > div > div { 
-            display: flex !important; 
-            justify-content: flex-end !important; 
-        }
-
-        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
+        .main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
+        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
+        label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: left !important; }
+        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
+        .stNumberInput { margin-bottom: 20px; }
     </style>
 """, unsafe_allow_html=True)
-
-
-
 
 # ------------------ UI TITLE ------------------
 st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
 
+# ------------------ UNIVERSITY SELECTOR ------------------
+# ------------------ UNIVERSITY SELECTOR ------------------
+university = st.selectbox(
+    "اختر الجامعة:",
+    [
+        "جامعة الكويت",
+        "جامعة الشرق الأوسط الأمريكية (AUM)",
+        "جامعة الخليج للعلوم والتكنولوجيا (GUST)",
+        "الجامعة الأمريكية في الكويت (AUK)",
+    ]
+)
 
-# University selection
-university = st.selectbox("اختر الجامعة", 
-                          ["جامعة الكويت", 
-                           "جامعة الخليج للعلوم والتكنولوجيا (GUST)", 
-                           "الجامعة الأمريكية في الكويت (AUK)", 
-                           "جامعة الشرق الأوسط الأمريكية (AUM)"]
-                         )
+# ------------------ CONDITIONAL INPUTS ------------------
 st.subheader("أدخل درجاتك")
-# GPA always required
-gpa = st.number_input("النسبة في الثانوية", min_value=0.0, max_value=100.0, step=0.1)
 
-# -------------------------------- KU --------------------------------
 if university == "جامعة الكويت":
-    st.write("### اختبارات القبول المطلوبة لجامعة الكويت:")
-    english = st.number_input("اختبار قدرات اللغه الانجليزي", min_value=0.0, max_value=100.0, step=0.1)
-    math = st.number_input("اختبار قدرات الرياضيات", min_value=0.0, max_value=100.0, step=0.1)
-    arabic = st.number_input("اختبار قدرات اللغه العربي (اختياري)", min_value=0.0, max_value=100.0, step=0.1)
-    french = st.number_input("اختبار قدرات الفرنسية (اختياري) ", min_value=0.0, max_value=100.0, step=0.1)
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    math = st.number_input(" درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    arabic = st.number_input(" درجة القدرات – عربي ٪  (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+    french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
 
-# -------------------------------- AUM --------------------------------
 elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
-    st.write("### اختبارات القبول المطلوبة لـ AUM:")
-    english = st.number_input("English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.1)
-    math = st.number_input("Math Placement Test (MPT)", min_value=0.0, max_value=100.0, step=0.1)
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
 
-# -------------------------------- GUST --------------------------------
-elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
-    st.write("### اختبارات القبول المطلوبة لـ GUST:")
-    english = st.number_input("English Placement Test (EPT)", min_value=0.0, max_value=100.0, step=0.1)
-    math = st.number_input("اختبار تحديد مستوى الرياضيات (إن وجد)", min_value=0.0, max_value=100.0, step=0.1)
-
-# -------------------------------- AUK --------------------------------
 elif university == "الجامعة الأمريكية في الكويت (AUK)":
-    st.write("### اختبارات القبول المطلوبة لـ AUK:")
-    english = st.number_input("TOEFL / IELTS", min_value=0.0, max_value=120.0, step=0.1)
-    reading = st.number_input("ACCUPLACER Reading", min_value=0.0, max_value=120.0, step=0.1)
-    math = st.number_input("ACCUPLACER Math (حسب التخصص)", min_value=0.0, max_value=120.0, step=0.1)
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
 
+elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
+    gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
+    english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
 
 # ------------------ INTEREST SELECTOR ------------------
 st.subheader("اختيار مجال اهتمامك")
@@ -459,17 +436,13 @@ if st.button(" اقترح التخصصات"):
 
     matched = []
 
-
-
-
-            
-
     for name, data in uni_colleges.items():
-        if "stream" in data:
-            if stream == "أدبي" and data["stream"] == "علمي":
-                continue
+        # Stream check
+        if "stream" in data and data["stream"] != stream:
+            continue
         if interest not in data.get("interests", []):
             continue
+
         weights = data.get("weights", {})
         score = 0
         if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
@@ -479,9 +452,9 @@ if st.button(" اقترح التخصصات"):
         if "french" in weights: score += french * (weights.get("french", 0) / 100)
 
         final_score = round(score, 2)
+
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
-
 
     # --- DISPLAY RESULTS ---
     if matched:
@@ -499,7 +472,7 @@ if st.button(" اقترح التخصصات"):
                 paths_html += "</ul>"
 
             st.markdown(f"""
-            <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
                 <h3 style='margin-bottom: 10px;'>{name}</h3>
                 <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
                 <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
@@ -508,4 +481,3 @@ if st.button(" اقترح التخصصات"):
             """, unsafe_allow_html=True)
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
-
