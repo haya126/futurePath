@@ -14,13 +14,25 @@ st.markdown("""
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+st.set_page_config(page_title="منصه تخصصي", layout="centered")
+st.markdown("""
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
         body { direction: rtl; text-align: right; background-color: #F9F7F1; }
         * { font-family: 'Tajawal', sans-serif !important; }
+
+        /* 🔧 FIX — Move text to the LEFT side */
         .main > div:first-child > div > div > div > div { 
             display: flex; 
-            justify-content: flex-end; 
+            justify-content: flex-start; 
         }
+
         h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
         label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
@@ -28,6 +40,7 @@ st.markdown("""
         .stNumberInput { margin-bottom: 20px; }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 # ------------------ UI TITLE ------------------
