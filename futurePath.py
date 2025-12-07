@@ -17,7 +17,10 @@ st.markdown("""
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
         body { direction: rtl; text-align: right; background-color: #F9F7F1; }
         * { font-family: 'Tajawal', sans-serif !important; }
-        .main > div:first-child > div > div > div > div { display: flex; justify-content: center; }
+        .main > div:first-child > div > div > div > div { 
+            display: flex; 
+            justify-content: flex-end; 
+        }
         h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1); }
         label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
@@ -25,6 +28,7 @@ st.markdown("""
         .stNumberInput { margin-bottom: 20px; }
     </style>
 """, unsafe_allow_html=True)
+
 
 # ------------------ UI TITLE ------------------
 st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
