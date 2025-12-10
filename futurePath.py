@@ -43,12 +43,13 @@ st.markdown("""
             text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Subheaders and section titles */
+        /* All subheaders and section titles */
         .stSubheader, .stMarkdown h3, .stMarkdown h4 {
             text-align: right !important;
             font-weight: 600;
             margin-top: 20px;
             margin-bottom: 10px;
+            color: #2C2C2C;
         }
 
         /* Labels above inputs */
@@ -73,6 +74,7 @@ st.markdown("""
 
     </style>
 """, unsafe_allow_html=True)
+
 
 
 
