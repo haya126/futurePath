@@ -23,20 +23,21 @@ st.markdown("""
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
-        /* Align input labels/titles to the right */
-        label[for] {
-            display: block;       /* ensures label is on its own line */
-            text-align: right;    /* move the text to the right */
-            font-size: 16px;
-            font-weight: 500;
-            color: #444;
+        /* Right-align all Streamlit subheaders and section titles */
+        .stSubheader, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+            text-align: right !important;
         }
 
-        /* Keep the input boxes left-aligned */
-        .stTextInput > div > div > input,
-        .stNumberInput > div > div > input {
-            text-align: left;
-            font-size: 15px;
+        /* Optional: give a little spacing and font weight to subheaders */
+        .stSubheader {
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Optional: for the small descriptive markdown text */
+        .stMarkdown p {
+            text-align: right !important;
         }
     </style>
 """, unsafe_allow_html=True)
