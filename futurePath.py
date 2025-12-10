@@ -17,25 +17,26 @@ st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        body { direction: rtl; text-align: right; background-color: #F9F7F1; }
+        body { direction: ltr; text-align: left; background-color: #F9F7F1; }
         * { font-family: 'Tajawal', sans-serif !important; }
         h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
 
         /* Input labels aligned left */
         label, .stNumberInput label { text-align: left; display: block; font-size: 16px; font-weight: 500; color: #444; }
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
+        .stNumberInput > div > div > input { text-align: left; font-size: 15px; }
 
         .stNumberInput { margin-bottom: 20px; }
 
-        /* College card text aligned left */
-        .college-card { border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: left; }
+        /* College card flipped to left side */
+        .college-card { border-left: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: left; }
         .college-title { margin-bottom: 10px; font-size: 20px; }
 
         .path-good { color: green; font-weight: bold; }
         .path-bad { color: red; }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 
