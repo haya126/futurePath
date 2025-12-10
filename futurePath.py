@@ -1,43 +1,29 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
 import streamlit as st
-
-# ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
-st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
+from collections import OrderedDict
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
+
+# Hide Streamlit default UI
 st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 
-st.set_page_config(page_title="منصه تخصصي", layout="centered")
-st.markdown("""
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
 
-        body { direction: rtl; text-align: right; background-color: #F9F7F1; }
-        * { font-family: 'Tajawal', sans-serif !important; }
+body { direction: rtl; text-align: right; background-color: #F9F7F1; }
+* { font-family: 'Tajawal', sans-serif !important; }
 
-        /* FIX: Move everything to the RIGHT side */
-        .main > div:first-child > div > div > div > div { 
-            display: flex !important; 
-            justify-content: flex-end !important; 
-        }
+/* Make ALL widgets align to the right */
+.block-container { direction: rtl !important; text-align: right !important; }
 
-        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
-        .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: left !important; }
-    </style>
+/* Inputs should still type left for numbers */
+.stNumberInput input {
+text-align: right !important;
+}
+</style>
 """, unsafe_allow_html=True)
 
 
