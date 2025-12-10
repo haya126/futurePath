@@ -35,11 +35,6 @@ st.markdown("""
             font-family: 'Tajawal', sans-serif !important;
         }
 
-        .main > div:first-child > div > div > div > div {
-            display: flex;
-            justify-content: center;
-        }
-
         h1, h2 {
             text-align: center !important;
             font-weight: 700;
