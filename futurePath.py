@@ -2,37 +2,70 @@
 from collections import OrderedDict
 import streamlit as st
 
+
 # ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
+# Hide Streamlit default menu, footer, and header
 st.markdown("""
     <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
-
-# ------------------ PAGE STYLING ------------------
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        body { direction: rtl; text-align: right; background-color: #F9F7F1; }
-        * { font-family: 'Tajawal', sans-serif !important; }
-        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
-        label, .stNumberInput label { font-size: 16px; font-weight: 500; color: #444; }
+
+        body {
+            direction: rtl;
+            text-align: right;
+            background-color: #F9F7F1;
+        }
+
+        * {
+            font-family: 'Tajawal', sans-serif !important;
+        }
+
+        .main > div:first-child > div > div > div > div {
+            display: flex;
+            justify-content: center;
+        }
+
+        h1, h2 {
+            text-align: center !important;
+            font-weight: 700;
+            color: #2C2C2C;
+            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label, .stNumberInput label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+        }
+
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
-        .stNumberInput { margin-bottom: 20px; }
-        .college-card { border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; }
-        .college-title { margin-bottom: 10px; font-size: 20px; }
-        .path-good { color: green; font-weight: bold; }
-        .path-bad { color: red; }
+        .stNumberInput > div > div > input {
+            text-align: right;
+            font-size: 15px;
+        }
+
+        .stNumberInput {
+            margin-bottom: 20px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# ------------------ TITLE ------------------
-st.markdown("<h1>ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
+
+
+# ------------------ UI TITLE ------------------
+st.markdown("""
+<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>
+""", unsafe_allow_html=True)
 
 # ------------------ UNIVERSITY SELECTOR ------------------
 university = st.selectbox(
@@ -41,12 +74,22 @@ university = st.selectbox(
         "جامعة الكويت",
         "جامعة الشرق الأوسط الأمريكية (AUM)",
         "جامعة الخليج للعلوم والتكنولوجيا (GUST)",
-        "الجامعة الأمريكية في الكويت (AUK)"
+        "الجامعة الأمريكية في الكويت (AUK)",
+        "جامعة الكويت للعلوم الطبية"
     ]
 )
 
-# ------------------ INTEREST & STREAM ------------------
-interest = st.selectbox("اختر مجال اهتمامك:", [
+# ------------------ INPUTS ------------------
+st.subheader("أدخل درجاتك")
+gpa = st.number_input(" معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+math = st.number_input(" درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+english = st.number_input(" درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+arabic = st.number_input(" درجة القدرات – عربي ٪  (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+french = st.number_input(" درجة القدرات – فرنسي ٪ (إذا كانت مطلوبة)", min_value=0.0, max_value=100.0, step=0.01, format="%g")
+
+# ------------------ INTEREST SELECTOR ------------------
+st.subheader("اختيار مجال اهتمامك")
+interest = st.selectbox(" شنو نوع التخصصات اللي تميل لها أكثر؟", [
     "المجال الطبي والصحي 🏥",
     "الهندسة والتقنية ⚙️",
     "التحليل والرياضيات 📊",
@@ -56,45 +99,8 @@ interest = st.selectbox("اختر مجال اهتمامك:", [
     "التربية والتعليم 👩‍🏫"
 ])
 
-stream = st.radio("اختر المسار:", ["علمي", "أدبي"])
+# ------------------ YOUR ORIGINAL KU COLLEGE DATA (UNMODIFIED) ------------------
 
-# ------------------ UNIVERSITY-SPECIFIC INPUTS ------------------
-if university == "جامعة الكويت":
-    st.subheader("أدخل درجاتك — جامعة الكويت")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
-    math = st.number_input("درجة القدرات – رياضيات ٪", min_value=0.0, max_value=100.0, step=0.01)
-    english = st.number_input("درجة القدرات – إنجليزي ٪", min_value=0.0, max_value=100.0, step=0.01)
-    arabic = st.number_input("درجة القدرات – عربي ٪", min_value=0.0, max_value=100.0, step=0.01)
-    french = st.number_input("درجة القدرات – فرنسي ٪", min_value=0.0, max_value=100.0, step=0.01)
-else:
-    gpa = math = english = arabic = french = None
-
-if university == "جامعة الشرق الأوسط الأمريكية (AUM)":
-    st.subheader("أدخل درجاتك — AUM")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
-    aum_english = st.number_input("AUM — English placement ٪", min_value=0.0, max_value=100.0, step=0.01)
-    aum_math = st.number_input("AUM — Math placement ٪", min_value=0.0, max_value=100.0, step=0.01)
-else:
-    aum_english = aum_math = None
-
-if university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
-    st.subheader("أدخل درجاتك — GUST")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
-    gust_english = st.number_input("GUST — English test ٪", min_value=0.0, max_value=100.0, step=0.01)
-    gust_math = st.number_input("GUST — Math test ٪", min_value=0.0, max_value=100.0, step=0.01)
-else:
-    gust_english = gust_math = None
-
-if university == "الجامعة الأمريكية في الكويت (AUK)":
-    st.subheader("أدخل درجاتك — AUK")
-    gpa = st.number_input("معدل الثانوية العامة ٪", min_value=0.0, max_value=100.0, step=0.01)
-    auk_english = st.number_input("AUK — English placement ٪", min_value=0.0, max_value=100.0, step=0.01)
-    auk_math = st.number_input("AUK — Math placement ٪", min_value=0.0, max_value=100.0, step=0.01)
-else:
-    auk_english = auk_math = None
-
-# ------------------ UNIVERSITY DATA ------------------
-# ------------------ KU COLLEGES ------------------
 colleges = OrderedDict({
     "كلية الطب": {
       "stream": "علمي",
@@ -363,7 +369,8 @@ colleges = OrderedDict({
        ]
     }
 })
-# --- AUM colleges ---
+
+# --- الجامعة الأمريكية في الشرق الأوسط (AUM) ---
 aum_colleges = {
     "College of Engineering and Technology": {
         "weights": {"gpa": 80, "english": 20},
@@ -388,7 +395,7 @@ aum_colleges = {
     }
 }
 
-# --- AUK colleges ---
+# --- الجامعة الأمريكية في الكويت (AUK) ---
 auk_colleges = {
     "College of Arts and Sciences": {
         "weights": {"gpa": 85, "english": 15},
@@ -413,7 +420,7 @@ auk_colleges = {
     }
 }
 
-# --- GUST colleges ---
+# --- الجامعة الخليجية للعلوم والتكنولوجيا (GUST) ---
 gust_colleges = {
     "College of Business Administration": {
         "weights": {"gpa": 85, "english": 15},
@@ -431,101 +438,79 @@ gust_colleges = {
     }
 }
 
-# ------------------ SCORING FUNCTIONS ------------------
-def compute_ku_score(weights, gpa, english, math, arabic, french):
-    score = 0
-    if weights:
-        score += gpa * (weights.get("gpa",0)/100)
-        score += math * (weights.get("math",0)/100)
-        score += english * (weights.get("english",0)/100)
-        score += arabic * (weights.get("arabic",0)/100)
-        score += french * (weights.get("french",0)/100)
-    return round(score,2)
 
-def compute_other_uni_score(university_key, college_name, interest, gpa, english_score, math_score):
-    e = english_score or 0
-    m = math_score or 0
-    if university_key == "AUM":
-        score = gpa * 0.6 + e * 0.25 + m * 0.15
-    elif university_key == "GUST":
-        score = gpa * 0.6 + e * 0.3 + m * 0.1
-    elif university_key == "AUK":
-        score = gpa * 0.6 + e * 0.25 + m * 0.15
-    else:
-        score = gpa * 0.7 + e * 0.2 + m * 0.1
-    return round(score,2)
+# ------------------ STREAM SELECTOR ------------------
+st.subheader("اختر المسار الثانوي")
+stream = st.radio("هل أنت من المسار العلمي أم الأدبي؟", ["علمي", "أدبي"])
 
-# ------------------ MAIN PROCESSING ------------------
-if st.button("اقترح التخصصات"):
-    if university == "جامعة الكويت":
-        uni_colleges = ku_colleges
-        uni_key = "KU"
-    elif university == "جامعة الشرق الأوسط الأمريكية (AUM)":
-        uni_colleges = aum_colleges
-        uni_key = "AUM"
-    elif university == "الجامعة الأمريكية في الكويت (AUK)":
-        uni_colleges = auk_colleges
-        uni_key = "AUK"
-    elif university == "جامعة الخليج للعلوم والتكنولوجيا (GUST)":
-        uni_colleges = gust_colleges
-        uni_key = "GUST"
-    else:
-        uni_colleges = {}
-        uni_key = None
+# ========================== MAIN RESULTS =============================
+if st.button(" اقترح التخصصات"):
+
+    if university != "جامعة الكويت":
+        st.info("📌 دعم التخصصات لباقي الجامعات سيضاف قريباً. الآن النتائج خاصة بجامعة الكويت.")
 
     matched = []
-    for name, data in uni_colleges.items():
-        if data.get("stream") and data["stream"] != stream:
+
+    for name, data in colleges.items():
+        if "stream" in data and data["stream"] != stream:
             continue
-        if interest not in data.get("interests", []):
+        if interest not in data["interests"]:
             continue
 
-        if uni_key == "KU":
-            final_score = compute_ku_score(data.get("weights", {}), gpa, english, math, arabic, french)
-        elif uni_key == "AUM":
-            final_score = compute_other_uni_score("AUM", name, interest, gpa, aum_english, aum_math)
-        elif uni_key == "GUST":
-            final_score = compute_other_uni_score("GUST", name, interest, gpa, gust_english, gust_math)
-        elif uni_key == "AUK":
-            final_score = compute_other_uni_score("AUK", name, interest, gpa, auk_english, auk_math)
+        weights = data["weights"]
+
+        if isinstance(weights, dict) and stream in weights:
+            selected_weights = weights[stream]
+        elif isinstance(weights, dict) and "gpa" in weights:
+            selected_weights = weights
         else:
-            final_score = 0
+            continue
 
-        if final_score >= data.get("min_score",0):
+        score = 0
+        if "gpa" in selected_weights: score += gpa * (selected_weights["gpa"] / 100)
+        if "math" in selected_weights: score += math * (selected_weights["math"] / 100)
+        if "english" in selected_weights: score += english * (selected_weights["english"] / 100)
+        if "arabic" in selected_weights: score += arabic * (selected_weights["arabic"] / 100)
+        if "french" in selected_weights: score += french * (selected_weights["french"] / 100)
+
+        final_score = round(score, 2)
+
+        if final_score >= data["min_score"]:
             matched.append((name, data, final_score))
 
+    # ------------------ OUTPUT RESULTS ------------------
     if matched:
-        st.success(f"هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+        st.success(" هذه التخصصات تناسبك حسب درجاتك واهتماماتك")
         for name, data, final_score in matched:
+
+            # -------- PATHS WITH GREEN/RED SUPPORT ---------
             paths_html = ""
-            if "paths" in data:
-                paths_html = "<p><strong>المسارات:</strong></p><ul>"
+            if "paths" in data and data["paths"]:
+                paths_html = "<p><strong> المسارات:</strong></p><ul>"
                 for p in data["paths"]:
-                    if isinstance(p, dict):
-                        cls = "path-good" if final_score >= p.get("min_score",0) else "path-bad"
-                        paths_html += f"<li class='{cls}'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
+                    if final_score >= p["min_score"]:
+                        paths_html += f"<li style='color:green;font-weight:bold;'>✔ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
-                        paths_html += f"<li>{p}</li>"
+                        paths_html += f"<li style='color:red;'>✘ {p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                 paths_html += "</ul>"
 
-            icon = "🎓"
-            if any(k in name for k in ["الهندسة","Engineering","Computer"]):
-                icon = "⚙️"
-            elif any(k in name for k in ["طب","الصيدلة","الصحي"]):
-                icon = "🏥"
-            elif any(k in name for k in ["الآداب","الفنون","Design"]):
-                icon = "🎨"
-            elif any(k in name for k in ["القانون","الشريعة","حقوق"]):
-                icon = "📚"
-
+            # -------- DISPLAY CARD ---------
             st.markdown(f"""
-                <div class='college-card'>
-                    <div style='font-size:28px'>{icon}</div>
-                    <h3 class='college-title'>{name}</h3>
-                    <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                    <p><strong>سنوات الدراسة:</strong> {data.get('years','?')} سنوات</p>
-                    {paths_html}
-                </div>
+            <div style='border-right: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px;'>
+                <h3 style='margin-bottom: 10px;'>{name}</h3>
+                <p><strong> معدلك المكافئ:</strong> {final_score}%</p>
+                <p><strong> سنوات الدراسة:</strong> {data['years']} سنوات</p>
+                {paths_html}
+            </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style='text-align:center; font-size:13px; color:#666; margin-top:30px;'>
+            📌 <em>المعلومات مبنية على بيانات رسمية من جامعة الكويت للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
+        </div>
+        """, unsafe_allow_html=True)
+
     else:
-        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+        st.warning("عذرًا، لم نجد تخصصات تتوافق مع درجاتك واهتماماتك.")
+
+
