@@ -90,7 +90,7 @@ university = st.selectbox("اختر الجامعة",
                            "الجامعة الأمريكية في الكويت (AUK)", 
                            "جامعة الشرق الأوسط الأمريكية (AUM)"]
                          )
-st.subheader("أدخل درجاتك")
+st.markdown("<h3 style='text-align: right;'>أدخل درجاتك</h3>", unsafe_allow_html=True)
 # GPA always required
 gpa = st.number_input("النسبة في الثانوية", min_value=0.0, max_value=100.0, step=0.1)
 
