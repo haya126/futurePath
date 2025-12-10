@@ -24,28 +24,46 @@ st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        body { direction: ltr; text-align: left; background-color: #F9F7F1; }
-        * { font-family: 'Tajawal', sans-serif !important; }
-        h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
 
-        /* Move only input labels/titles to the right */
-        label, .stNumberInput label { text-align: right; display: block; font-size: 16px; font-weight: 500; color: #444; }
+        body {
+            direction: rtl;
+            text-align: right;
+            background-color: #F9F7F1;
+        }
 
-        /* Keep input boxes text aligned left */
+        * {
+            font-family: 'Tajawal', sans-serif !important;
+        }
+
+        .main > div:first-child > div > div > div > div {
+            display: flex;
+            justify-content: center;
+        }
+
+        h1, h2 {
+            text-align: center !important;
+            font-weight: 700;
+            color: #2C2C2C;
+            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label, .stNumberInput label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+        }
+
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: left; font-size: 15px; }
+        .stNumberInput > div > div > input {
+            text-align: right;
+            font-size: 15px;
+        }
 
-        .stNumberInput { margin-bottom: 20px; }
-
-        /* College card text aligned right, keep border on left */
-        .college-card { border-left: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right; }
-        .college-title { margin-bottom: 10px; font-size: 20px; }
-
-        .path-good { color: green; font-weight: bold; }
-        .path-bad { color: red; }
+        .stNumberInput {
+            margin-bottom: 20px;
+        }
     </style>
 """, unsafe_allow_html=True)
-
 
 
 
