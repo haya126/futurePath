@@ -12,8 +12,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
 
-# ------------------ PAGE STYLING ------------------
+st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
@@ -21,7 +28,7 @@ st.markdown("""
         * { font-family: 'Tajawal', sans-serif !important; }
         h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
 
-        /* Move only input titles above the inputs to the right */
+        /* Move only input labels/titles to the right */
         label, .stNumberInput label { text-align: right; display: block; font-size: 16px; font-weight: 500; color: #444; }
 
         /* Keep input boxes text aligned left */
@@ -30,7 +37,7 @@ st.markdown("""
 
         .stNumberInput { margin-bottom: 20px; }
 
-        /* Move only the college card text to the right, keep the border on the left */
+        /* College card text aligned right, keep border on left */
         .college-card { border-left: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right; }
         .college-title { margin-bottom: 10px; font-size: 20px; }
 
@@ -38,9 +45,6 @@ st.markdown("""
         .path-bad { color: red; }
     </style>
 """, unsafe_allow_html=True)
-
-
-
 
 
 
