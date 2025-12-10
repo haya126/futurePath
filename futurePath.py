@@ -21,14 +21,16 @@ st.markdown("""
         * { font-family: 'Tajawal', sans-serif !important; }
         h1, h2 { text-align: center !important; font-weight: 700; color: #2C2C2C; }
 
-        /* Input labels moved to the other side */
+        /* Move only input titles above the inputs to the right */
         label, .stNumberInput label { text-align: right; display: block; font-size: 16px; font-weight: 500; color: #444; }
+
+        /* Keep input boxes text aligned left */
         .stTextInput > div > div > input,
-        .stNumberInput > div > div > input { text-align: right; font-size: 15px; }
+        .stNumberInput > div > div > input { text-align: left; font-size: 15px; }
 
         .stNumberInput { margin-bottom: 20px; }
 
-        /* College card text moved to the other side */
+        /* Move only the college card text to the right, keep the border on the left */
         .college-card { border-left: 6px solid #003366; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right; }
         .college-title { margin-bottom: 10px; font-size: 20px; }
 
@@ -36,6 +38,7 @@ st.markdown("""
         .path-bad { color: red; }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 
