@@ -23,22 +23,54 @@ st.markdown("""
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
-        /* Right-align all Streamlit subheaders and section titles */
-        .stSubheader, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-            text-align: right !important;
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            direction: rtl;
+            text-align: right;
+            background-color: #F9F7F1;
         }
 
-        /* Optional: give a little spacing and font weight to subheaders */
-        .stSubheader {
+        * {
+            font-family: 'Tajawal', sans-serif !important;
+        }
+
+        /* Main headers */
+        h1, h2 {
+            text-align: center !important;
+            font-weight: 700;
+            color: #2C2C2C;
+            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Subheaders and section titles */
+        .stSubheader, .stMarkdown h3, .stMarkdown h4 {
+            text-align: right !important;
             font-weight: 600;
             margin-top: 20px;
             margin-bottom: 10px;
         }
 
-        /* Optional: for the small descriptive markdown text */
-        .stMarkdown p {
-            text-align: right !important;
+        /* Labels above inputs */
+        label, .stNumberInput label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+            text-align: right;
+            display: block;
         }
+
+        /* Input boxes */
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input {
+            text-align: right;
+            font-size: 15px;
+        }
+
+        .stNumberInput {
+            margin-bottom: 20px;
+        }
+
     </style>
 """, unsafe_allow_html=True)
 
