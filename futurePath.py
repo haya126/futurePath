@@ -569,29 +569,30 @@ if st.button(" اقترح التخصصات"):
 
 
     # --- DISPLAY RESULTS ---
-    if matched:
-        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+    iif matched:
+         st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
 
-        for name, data, final_score in matched:
-            paths_html = ""
-            if "paths" in data and data["paths"]:
-                paths_html = "<p><strong> المسارات:</strong></p><ul>"
-                for p in data["paths"]:
-                    if isinstance(p, dict):
-                        color = "green" if final_score >= p.get("min_score", 0) else "red"
-                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
-                    else:
-                        paths_html += f"<li>{p}</li>"
-                paths_html += "</ul>"
+         for name, data, final_score in matched:
 
-            st.markdown(f"""
-                <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
-                    <h3 style='margin-bottom: 10px;'>{name}</h3>
-                    <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                    <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                    {paths_html}
-                </div>
-            """, unsafe_allow_html=True)
+             paths_html = ""
+             if "paths" in data and data["paths"]:
+                 paths_html = "<p><strong> المسارات:</strong></p><ul>"
+                 for p in data["paths"]:
+                     if isinstance(p, dict):
+                         color = "green" if final_score >= p.get("min_score", 0) else "red"
+                         paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%، مدة الدراسة: {p['years']} سنوات)</li>"
+                     else:
+                         paths_html += f"<li>{p}</li>"
+                 paths_html += "</ul>"
+
+             st.markdown(f"""
+                 <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
+                     <h3 style='margin-bottom: 10px;'>{name}</h3>
+                     <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                     {paths_html}
+                 </div>
+             """, unsafe_allow_html=True)
+
 
     # NOTE appears ONCE, outside the loop
         st.markdown("""
