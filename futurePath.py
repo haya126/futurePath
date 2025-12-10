@@ -23,39 +23,20 @@ st.markdown("""
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
 st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-        body {
-            direction: rtl;
-            text-align: right;
-            background-color: #F9F7F1;
-        }
-
-        * {
-            font-family: 'Tajawal', sans-serif !important;
-        }
-
-        h1, h2 {
-            text-align: center !important;
-            font-weight: 700;
-            color: #2C2C2C;
-            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        label, .stNumberInput label {
+        /* Align input labels/titles to the right */
+        label[for] {
+            display: block;       /* ensures label is on its own line */
+            text-align: right;    /* move the text to the right */
             font-size: 16px;
             font-weight: 500;
             color: #444;
         }
 
+        /* Keep the input boxes left-aligned */
         .stTextInput > div > div > input,
         .stNumberInput > div > div > input {
-            text-align: right;
+            text-align: left;
             font-size: 15px;
-        }
-
-        .stNumberInput {
-            margin-bottom: 20px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -518,24 +499,22 @@ if st.button(" اقترح التخصصات"):
                         paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
 
-            if st.button("عرض التخصصات المتوافقة"):  # "Show compatible majors"
-    if data:  # if there is matching data
-        st.markdown(f"""
-            <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
-                {paths_html}
-            </div>
-        """, unsafe_allow_html=True)
+            st.markdown(f"""
+        <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
+            <h3 style='margin-bottom: 10px;'>{name}</h3>
+            <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+            <p><strong>سنوات الدراسة:</strong> {data['years']} سنوات</p>
+            {paths_html}
+        </div>
+    """, unsafe_allow_html=True)
 
-        # Note at the end
-        st.markdown("""
-            <div style='text-align: center; font-size: 13px; color: #666; margin-top: 30px;'>
-                📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
-            </div>
-        """, unsafe_allow_html=True)
+    # Note added only once at the end
+    st.markdown("""
+        <div style='text-align: center; font-size: 13px; color: #666; margin-top: 30px;'>
+            📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
+        </div>
+    """, unsafe_allow_html=True)
 
-    else:  # show warning only when button clicked and no data
-        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+else:
+    st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
 
