@@ -582,7 +582,7 @@ if st.button(" اقترح التخصصات"):
                         paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%)</li>"
                     else:
                         paths_html += f"<li>{p}</li>"
-                 paths_html += "</ul>"
+                paths_html += "</ul>"
 
             st.markdown(f"""
                 <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
