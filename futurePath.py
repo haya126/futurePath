@@ -569,7 +569,7 @@ if st.button(" اقترح التخصصات"):
 
 
     # --- DISPLAY RESULTS ---
-     if matched:
+    if matched:
          st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
 
          for name, data, final_score in matched:
