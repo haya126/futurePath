@@ -582,11 +582,10 @@ if st.button(" اقترح التخصصات"):
 
         for name, data, final_score in matched:
 
+            # For colleges with paths, show each path with its own years
             paths_html = ""
-
-            # If college has paths, show each path with its own years
             if "paths" in data and data["paths"]:
-                paths_html = "<p><strong> المسارات:</strong></p><ul>"
+                paths_html = "<p><strong>المسارات:</strong></p><ul>"
                 for p in data["paths"]:
                     color = "green" if final_score >= p.get("min_score", 0) else "red"
                     years_text = f"، مدة الدراسة: {p['years']} سنوات" if "years" in p else ""
@@ -615,6 +614,7 @@ if st.button(" اقترح التخصصات"):
 
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+
 
 
 
