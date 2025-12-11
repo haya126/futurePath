@@ -200,7 +200,7 @@ colleges = OrderedDict({
       "years": 5,
       "paths": [
         {"name": "التصميم المرئي", "min_score": 66.29, "years": 4},
-        {"name": "العمارة الداخلية", "min_score": 72.71, "years": 4},
+        {"name": "العمارة الداخلية", "min_score": 72.71, "years": },
         {"name": "العمارة", "min_score": 80.02, "years": 5}
       ]
     },
@@ -542,6 +542,7 @@ if st.button(" اقترح التخصصات"):
     else:
         uni_colleges = {}
 
+    # Always define matched first
     matched = []
 
     # Match logic
@@ -573,6 +574,7 @@ if st.button(" اقترح التخصصات"):
 
         final_score = round(score, 2)
 
+        # Check min score
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
@@ -584,29 +586,26 @@ if st.button(" اقترح التخصصات"):
 
             paths_html = ""
 
-            # If college has paths, show each path with its own years
             if "paths" in data and data["paths"]:
                 paths_html = "<p><strong> المسارات:</strong></p><ul>"
                 for p in data["paths"]:
-                    color = "green" if final_score >= p.get("min_score", 0) else "red"
-                    # Show years directly next to each path
-                    paths_html += f"<li style='color:{color};'>{p['name']} — الحد الأدنى: {p['min_score']}%, مدة الدراسة: {p['years']} سنوات</li>"
+                    if isinstance(p, dict):
+                        color = "green" if final_score >= p.get("min_score", 0) else "red"
+                        years_text = f"، مدة الدراسة: {p['years']} سنوات" if "years" in p else ""
+                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%{years_text})</li>"
+                    else:
+                        paths_html += f"<li>{p}</li>"
                 paths_html += "</ul>"
-
-            # For colleges without paths, show college years
-            years_html = ""
-            if "paths" not in data or not data["paths"]:
-                years_html = f"<p><strong>مدة الدراسة:</strong> {data.get('years', '?')} سنوات</p>"
 
             st.markdown(f"""
                 <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
                     <h3 style='margin-bottom: 10px;'>{name}</h3>
                     <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                    {years_html}
                     {paths_html}
                 </div>
             """, unsafe_allow_html=True)
 
+        # NOTE appears once outside the loop
         st.markdown("""
             <div style='text-align: center; font-size: 13px; color: #666; margin-top: 30px;'>
                 📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
@@ -615,4 +614,6 @@ if st.button(" اقترح التخصصات"):
 
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
+
+
 
