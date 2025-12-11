@@ -528,8 +528,8 @@ gust_colleges = {
     }
 }
 # ========================== MAIN RESULTS =============================
- # ========================== MAIN RESULTS =============================
 if st.button(" اقترح التخصصات"):
+
     # Select correct university
     if university == "جامعة الكويت":
         uni_colleges = colleges
@@ -542,65 +542,78 @@ if st.button(" اقترح التخصصات"):
     else:
         uni_colleges = {}
 
+    # Always define matched first
     matched = []
 
-
-
-
-            
-
+    # Match logic
     for name, data in uni_colleges.items():
+
+        # Stream check
         if "stream" in data:
             if stream == "أدبي" and data["stream"] == "علمي":
                 continue
+
+        # Interest check
         if interest not in data.get("interests", []):
             continue
+
+        # Score calculation
         weights = data.get("weights", {})
         score = 0
-        if "gpa" in weights: score += gpa * (weights["gpa"] / 100)
-        if "math" in weights: score += math * (weights.get("math", 0) / 100)
-        if "english" in weights: score += english * (weights.get("english", 0) / 100)
-        if "arabic" in weights: score += arabic * (weights.get("arabic", 0) / 100)
-        if "french" in weights: score += french * (weights.get("french", 0) / 100)
+
+        if "gpa" in weights:
+            score += gpa * (weights["gpa"] / 100)
+        if "math" in weights:
+            score += math * (weights["math"] / 100)
+        if "english" in weights:
+            score += english * (weights["english"] / 100)
+        if "arabic" in weights:
+            score += arabic * (weights["arabic"] / 100)
+        if "french" in weights:
+            score += french * (weights["french"] / 100)
 
         final_score = round(score, 2)
+
+        # Check min score
         if final_score >= data.get("min_score", 0):
             matched.append((name, data, final_score))
 
-
     # --- DISPLAY RESULTS ---
-if matched:
-    st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
+    if matched:
+        st.success(f" هذه التخصصات تناسبك في {university} حسب درجاتك واهتماماتك")
 
-    for name, data, final_score in matched:
-        paths_html = ""
-        if "paths" in data and data["paths"]:
-            paths_html = "<p><strong> المسارات:</strong></p><ul>"
-            for p in data["paths"]:
-                if isinstance(p, dict):
-                    color = "green" if final_score >= p.get("min_score", 0) else "red"
-                    years_text = f"، مدة الدراسة: {p['years']} سنوات" if "years" in p else ""
-                    paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%{years_text})</li>"
-                else:
-                    paths_html += f"<li>{p}</li>"
-            paths_html += "</ul>"
+        for name, data, final_score in matched:
 
-        st.markdown(f"""
-            <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
-                <h3 style='margin-bottom: 10px;'>{name}</h3>
-                <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
-                {paths_html}
+            paths_html = ""
+
+            if "paths" in data and data["paths"]:
+                paths_html = "<p><strong> المسارات:</strong></p><ul>"
+                for p in data["paths"]:
+                    if isinstance(p, dict):
+                        color = "green" if final_score >= p.get("min_score", 0) else "red"
+                        years_text = f"، مدة الدراسة: {p['years']} سنوات" if "years" in p else ""
+                        paths_html += f"<li style='color:{color};'>{p['name']} (الحد الأدنى: {p['min_score']}%{years_text})</li>"
+                    else:
+                        paths_html += f"<li>{p}</li>"
+                paths_html += "</ul>"
+
+            st.markdown(f"""
+                <div style='border-right: 6px solid #4F7678; padding: 20px 25px; margin: 20px 0; background-color: #f9f9f9; border-radius: 10px; text-align: right;'>
+                    <h3 style='margin-bottom: 10px;'>{name}</h3>
+                    <p><strong>معدلك المكافئ:</strong> {final_score}%</p>
+                    {paths_html}
+                </div>
+            """, unsafe_allow_html=True)
+
+        # NOTE appears once outside the loop
+        st.markdown("""
+            <div style='text-align: center; font-size: 13px; color: #666; margin-top: 30px;'>
+                📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
             </div>
         """, unsafe_allow_html=True)
 
-    # NOTE appears once outside the loop
-    st.markdown("""
-        <div style='text-align: center; font-size: 13px; color: #666; margin-top: 30px;'>
-            📌 <em>المعلومات مبنية على بيانات رسمية من الجامعات للسنة الدراسية 2025–2026. قد تتغير المعدلات في السنوات القادمة.</em>
-        </div>
-    """, unsafe_allow_html=True)
+    else:
+        st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
 
-else:
-    st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
 
 
