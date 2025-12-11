@@ -582,7 +582,6 @@ if st.button(" اقترح التخصصات"):
 
         for name, data, final_score in matched:
 
-            # For colleges with paths, show each path with its own years
             paths_html = ""
             if "paths" in data and data["paths"]:
                 paths_html = "<p><strong>المسارات:</strong></p><ul>"
@@ -614,8 +613,3 @@ if st.button(" اقترح التخصصات"):
 
     else:
         st.warning(f"عذرًا، لم نجد تخصصات في {university} تتوافق مع درجاتك واهتماماتك.")
-
-
-
-
-
