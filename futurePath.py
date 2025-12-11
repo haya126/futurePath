@@ -200,7 +200,7 @@ colleges = OrderedDict({
       "years": 5,
       "paths": [
         {"name": "التصميم المرئي", "min_score": 66.29, "years": 4},
-        {"name": "العمارة الداخلية", "min_score": 72.71, "years": },
+        {"name": "العمارة الداخلية", "min_score": 72.71, "years": 4},
         {"name": "العمارة", "min_score": 80.02, "years": 5}
       ]
     },
