@@ -217,7 +217,7 @@ colleges = OrderedDict({
         {"name": "الهندسة الصناعية والنظم الإدارية", "min_score": 65.07, "years": 4},
         {"name": "الهندسة الكهربائية", "min_score": 70.1, "years": 4},
         {"name": "الهندسة الكيميائية", "min_score": 66.42, "years": 4},
-        {"name": "الهندسة المدنية", "min_score": 72.5, "years": 4.5},
+        {"name": "الهندسة المدنية", "min_score": 72.5, "years": 4},
         {"name": "الهندسة الميكانيكية", "min_score": 63.17, "years": 4}
       ]
     },
