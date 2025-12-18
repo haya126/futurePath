@@ -3,77 +3,81 @@ from collections import OrderedDict
 import streamlit as st
 
 # ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
-st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
-
 st.set_page_config(page_title="منصه تخصصي", layout="centered")
+
 st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
+<style>
+/* Hide Streamlit UI */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+body {
+    direction: rtl;
+    text-align: right;
+    background-color: #F9F7F1;
+}
+
+* {
+    font-family: 'Tajawal', sans-serif !important;
+}
+
+/* Main headers */
+h1, h2 {
+    text-align: center !important;
+    font-weight: 700;
+    color: #2C2C2C;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Subheaders */
+.stSubheader, .stMarkdown h3, .stMarkdown h4 {
+    text-align: right !important;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #2C2C2C;
+}
+
+/* Labels */
+label, .stNumberInput label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    text-align: right;
+    display: block;
+}
+
+/* Inputs */
+.stTextInput > div > div > input,
+.stNumberInput > div > div > input {
+    text-align: right;
+    font-size: 15px;
+}
+
+.stNumberInput {
+    margin-bottom: 20px;
+}
+
+/* ✅ Green main action button (اقترح تخصصات) */
+.green-btn button {
+    background-color: #2E8B57 !important;
+    color: white !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    padding: 12px 28px !important;
+    font-size: 16px !important;
+}
+
+.green-btn button:hover {
+    background-color: #256D46 !important;
+    transform: scale(1.03);
+}
+</style>
 """, unsafe_allow_html=True)
 
-st.set_page_config(page_title="منصه تخصصي", layout="centered")
-st.markdown("""
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-        body {
-            direction: rtl;
-            text-align: right;
-            background-color: #F9F7F1;
-        }
-
-        * {
-            font-family: 'Tajawal', sans-serif !important;
-        }
-
-        /* Main headers */
-        h1, h2 {
-            text-align: center !important;
-            font-weight: 700;
-            color: #2C2C2C;
-            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* All subheaders and section titles */
-        .stSubheader, .stMarkdown h3, .stMarkdown h4 {
-            text-align: right !important;
-            font-weight: 600;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #2C2C2C;
-        }
-
-        /* Labels above inputs */
-        label, .stNumberInput label {
-            font-size: 16px;
-            font-weight: 500;
-            color: #444;
-            text-align: right;
-            display: block;
-        }
-
-        /* Input boxes */
-        .stTextInput > div > div > input,
-        .stNumberInput > div > div > input {
-            text-align: right;
-            font-size: 15px;
-        }
-
-        .stNumberInput {
-            margin-bottom: 20px;
-        }
-
-    </style>
-""", unsafe_allow_html=True)
 
 
 
