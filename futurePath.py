@@ -61,9 +61,8 @@ label, .stNumberInput label {
     margin-bottom: 20px;
 }
 
-/* ✅ Green main action button (اقترح تخصصات) */
 .green-btn button {
-    background-color: #2E8B57 !important;
+    background-color: #3E5F61 !important;  /* lighter green */
     color: white !important;
     border-radius: 14px !important;
     font-weight: 700 !important;
@@ -71,10 +70,10 @@ label, .stNumberInput label {
     font-size: 16px !important;
 }
 
-.stButton button:hover {
-    background-color: #3E5F61;
-    transform: scale(1.02);
+.green-btn button:hover {
+    background-color: #355355 !important; /* slightly darker on hover */
 }
+
 }
 </style>
 """, unsafe_allow_html=True)
