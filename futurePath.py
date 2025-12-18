@@ -4,88 +4,76 @@ import streamlit as st
 
 # ------------------ HIDE DEFAULT STREAMLIT MENU ------------------
 st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-:root {
-    --primary: #4F7678;
-    --secondary: #A8C3C1;
-    --bg: #F9F7F1;
-    --card: #FFFFFF;
-    --text: #2C2C2C;
-    --muted: #666;
-}
-
-html, body {
-    direction: rtl;
-    background-color: var(--bg);
-}
-
-* {
-    font-family: 'Tajawal', sans-serif !important;
-}
-
-/* Titles */
-h1 {
-    text-align: center;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 25px;
-}
-
-h3 {
-    color: var(--text);
-    font-weight: 600;
-    margin-top: 30px;
-}
-
-/* Inputs */
-.stNumberInput input, .stSelectbox select {
-    border-radius: 10px !important;
-    padding: 10px;
-}
-
-/* Buttons */
-.stButton button {
-    background-color: var(--primary);
-    color: white;
-    border-radius: 12px;
-    padding: 10px 20px;
-    font-weight: 600;
-    border: none;
-    transition: 0.2s ease;
-}
-
-.stButton button:hover {
-    background-color: #3E5F61;
-    transform: scale(1.02);
-}
-
-/* Radio & select spacing */
-.stRadio, .stSelectbox {
-    margin-bottom: 20px;
-}
-
-/* Result cards */
-.result-card {
-    background-color: var(--card);
-    border-right: 6px solid var(--primary);
-    padding: 22px 26px;
-    margin: 22px 0;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-}
-
-/* Footer note */
-.footer-note {
-    text-align: center;
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 35px;
-}
-</style>
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
 """, unsafe_allow_html=True)
 
+st.set_page_config(page_title="منصه تخصصي", layout="centered")
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+st.set_page_config(page_title="منصه تخصصي", layout="centered")
+st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            direction: rtl;
+            text-align: right;
+            background-color: #F9F7F1;
+        }
+
+        * {
+            font-family: 'Tajawal', sans-serif !important;
+        }
+
+        /* Main headers */
+        h1, h2 {
+            text-align: center !important;
+            font-weight: 700;
+            color: #2C2C2C;
+            text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* All subheaders and section titles */
+        .stSubheader, .stMarkdown h3, .stMarkdown h4 {
+            text-align: right !important;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #2C2C2C;
+        }
+
+        /* Labels above inputs */
+        label, .stNumberInput label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #444;
+            text-align: right;
+            display: block;
+        }
+
+        /* Input boxes */
+        .stTextInput > div > div > input,
+        .stNumberInput > div > div > input {
+            text-align: right;
+            font-size: 15px;
+        }
+
+        .stNumberInput {
+            margin-bottom: 20px;
+        }
+
+    </style>
+""", unsafe_allow_html=True)
 
 
 
