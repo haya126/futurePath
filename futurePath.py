@@ -72,7 +72,7 @@ label, .stNumberInput label {
 }
 
 .stButton button:hover {
-    background-color: #E9F4F1;
+    background-color: #5A7779;
     transform: scale(1.02);
 }
 }
