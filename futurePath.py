@@ -71,9 +71,10 @@ label, .stNumberInput label {
     font-size: 16px !important;
 }
 
-.green-btn button:hover {
-    background-color: #256D46 !important;
-    transform: scale(1.03);
+.stButton button:hover {
+    background-color: #3E5F61;
+    transform: scale(1.02);
+}
 }
 </style>
 """, unsafe_allow_html=True)
