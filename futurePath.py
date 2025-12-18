@@ -80,16 +80,38 @@ st.markdown("""
 
 
 # ------------------ UI TITLE ------------------
-st.markdown("<h1 style='text-align: right;'> ابحث عن التخصص المناسب لك</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: right;'>اختر الجامعة</h3>", unsafe_allow_html=True)
 
+universities = {
+    "جامعة الكويت": "logos/ku_logo.png",
+    "جامعة الشرق الأوسط الأمريكية (AUM)": "logos/aum_logo.png",
+    "الجامعة الأمريكية في الكويت (AUK)": "logos/auk_logo.png",
+    "جامعة الخليج للعلوم والتكنولوجيا (GUST)": "logos/gust_logo.png"
+}
 
-# University selection
-university = st.selectbox("اختر الجامعة", 
-                          ["جامعة الكويت", 
-                           "جامعة الخليج للعلوم والتكنولوجيا (GUST)", 
-                           "الجامعة الأمريكية في الكويت (AUK)", 
-                           "جامعة الشرق الأوسط الأمريكية (AUM)"]
-                         )
+cols = st.columns(4)
+selected_university = None
+
+for col, (name, logo) in zip(cols, universities.items()):
+    with col:
+        st.image(logo, use_container_width=True)
+        if st.button(name, key=name):
+            selected_university = name
+
+# Store selection so Streamlit remembers it
+if "university" not in st.session_state:
+    st.session_state.university = None
+
+if selected_university:
+    st.session_state.university = selected_university
+
+university = st.session_state.university
+
+# Stop if nothing is selected
+if university is None:
+    st.info("👆 الرجاء اختيار الجامعة للمتابعة")
+    st.stop()
+
 st.markdown("<h3 style='text-align: right;'>أدخل درجاتك</h3>", unsafe_allow_html=True)
 # GPA always required
 gpa = st.number_input("النسبة في الثانوية", min_value=0.0, max_value=100.0, step=0.1)
