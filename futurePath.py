@@ -17,7 +17,7 @@ header {visibility: hidden;}
 body {
     direction: rtl;
     text-align: right;
-    background-color: #F9F7F1;
+    background-color: #E6F0EE;
 }
 
 * {
@@ -61,8 +61,9 @@ label, .stNumberInput label {
     margin-bottom: 20px;
 }
 
+/* ✅ Green main action button (اقترح تخصصات) */
 .green-btn button {
-    background-color: #3E5F61 !important;  /* lighter green */
+    background-color: #2E8B57 !important;
     color: white !important;
     border-radius: 14px !important;
     font-weight: 700 !important;
@@ -70,10 +71,10 @@ label, .stNumberInput label {
     font-size: 16px !important;
 }
 
-.green-btn button:hover {
-    background-color: #355355 !important; /* slightly darker on hover */
+.stButton button:hover {
+    background-color: #E9F4F1;
+    transform: scale(1.02);
 }
-
 }
 </style>
 """, unsafe_allow_html=True)
