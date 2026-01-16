@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
 import streamlit as st
@@ -90,6 +91,7 @@ university = st.selectbox("اختر الجامعة",
                            "الجامعة الأمريكية في الكويت (AUK)", 
                            "جامعة الشرق الأوسط الأمريكية (AUM)"]
                          )
+# ------------------ GPA TYPE ------------------
 st.markdown("<h3 style='text-align: right;'>أدخل معدلك</h3>", unsafe_allow_html=True)
 
 gpa_type = st.radio("طريقة إدخال المعدل:", ["نسبة مئوية (%)", "GPA من 4"])
@@ -99,9 +101,8 @@ if gpa_type == "نسبة مئوية (%)":
     gpa = gpa_input
 else:
     gpa_input = st.number_input("المعدل (من 4)", 0.0, 4.0, step=0.01)
-    gpa = (gpa_input / 4) * 100  # تحويل إلى نسبة
-    
-gpa = st.number_input("النسبة في الثانوية", min_value=0.0, max_value=100.0, step=0.1)
+    gpa = (gpa_input / 4) * 100  # تحويل إلى نسبة مئوية لتتوافق مع الحساب
+
 
 # -------------------------------- KU --------------------------------
 if university == "جامعة الكويت":
